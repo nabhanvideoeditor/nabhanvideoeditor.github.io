@@ -662,6 +662,19 @@ html[lang="ar"] .hero-title { letter-spacing: 0; line-height: 1.35; }
 .modal-stage { background: #000; aspect-ratio: 16 / 9; }
 .modal-stage video, .modal-stage iframe { width: 100%; height: 100%; border: 0; object-fit: contain; background: #000; }
 .modal-stage--vertical { aspect-ratio: 9 / 16; max-height: 62vh; margin-inline: auto; }
+.modal-tag { display: block; font-size: .78rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.modal-clips { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px 0; }
+.modal-clips[hidden] { display: none; }
+.clip-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 13px; border-radius: 10px; cursor: pointer;
+  background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--text);
+  font-family: inherit; font-size: .8rem; transition: border-color .2s, background .2s, color .2s;
+}
+.clip-chip svg { width: 13px; height: 13px; color: var(--accent); flex-shrink: 0; }
+.clip-chip:hover { border-color: var(--accent); }
+.clip-chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.clip-chip.is-active svg { color: #fff; }
 .modal-breakdown {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
   padding: 24px 22px 28px;

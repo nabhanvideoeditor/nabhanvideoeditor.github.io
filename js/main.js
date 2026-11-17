@@ -550,11 +550,13 @@
       +       '<div class="modal-title-wrap">'
       +         '<span class="badge badge--accent" id="modalRatio">16:9</span>'
       +         '<h3 class="modal-title" id="modalTitle"></h3>'
+      +         '<span class="modal-tag" id="modalTag"></span>'
       +       '</div>'
       +       '<span class="timecode" id="modalTimecode"><span class="rec"></span><span id="modalTcVal">00:00:00:00</span></span>'
       +       '<button class="modal-close" id="modalClose" type="button" aria-label="Close">' + icon('close') + '</button>'
       +     '</div>'
       +     '<div class="modal-stage" id="modalStage"></div>'
+      +     '<div class="modal-clips" id="modalClips" hidden></div>'
       +     '<div class="modal-breakdown" id="modalBreakdown">'
       +       '<div><h4 id="mbChallengeH"></h4><p id="mbChallenge"></p></div>'
       +       '<div><h4 id="mbH"></h4><p id="mbTech"></p></div>'
@@ -579,29 +581,97 @@
     $('#mbResultH').textContent = currentLang === 'ar' ? '03 / النتائج' : '03 / IMPACT & RESULTS';
   }
 
+  var currentProjectId = null;
+
+  /* كل مشروع ممكن يكون فيه أكتر من فيديو (الفيديو الأساسي + extra) */
+  function buildClips(p) {
+    var clips = [{
+      src: p.videoUrl,
+      poster: p.thumb || '',
+      ratio: p.aspectRatio,
+      title: L(p.title),
+      tag: L(p.tag),
+      short: L(p.short) || L(p.title),
+      breakdown: true
+    }];
+    (p.extra || []).forEach(function (c) {
+      clips.push({
+        src: c.videoUrl,
+        poster: c.thumb || p.thumb || '',
+        ratio: c.aspectRatio || p.aspectRatio,
+        title: L(c.title),
+        tag: L(c.tag),
+        short: L(c.short) || L(c.title),
+        breakdown: false
+      });
+    });
+    return clips;
+  }
+
   function openProjectModal(id) {
     var p = S.work.projects.find(function (x) { return x.id === id; });
     if (!p) return;
-
-    $('#modalTitle').textContent = L(p.title);
-    $('#modalRatio').textContent = p.aspectRatio;
-    $('#mbChallenge').textContent = L(p.challenge);
-    $('#mbTech').textContent = L(p.technique);
-    $('#mbResult').textContent = L(p.result);
-    $('#modalBreakdown').style.display = '';
-    $('#modalTcVal').textContent = '00:00:00:00';
+    currentProjectId = id;
 
     var stage = $('#modalStage');
-    stage.classList.toggle('modal-stage--vertical', p.aspectRatio === '9:16');
+    var chipsWrap = $('#modalClips');
+    var clipIndex = 0;
+    var clips = buildClips(p);
 
-    if (p.isEmbed) {
-      stage.innerHTML = '<iframe src="' + esc(p.videoUrl) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-    } else if (p.videoUrl) {
-      stage.innerHTML = '<video controls autoplay playsinline poster="' + esc(p.thumb || '') + '">'
-        + '<source src="' + esc(p.videoUrl) + '" type="video/mp4"></video>';
-    } else {
-      stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>' + (currentLang === 'ar' ? 'مفيش فيديو مرفوع لهذا المشروع بعد' : 'No video attached to this project yet') + '</span></div>';
+    function paintChips() {
+      if (!chipsWrap) return;
+      if (clips.length < 2) { chipsWrap.innerHTML = ''; chipsWrap.hidden = true; return; }
+      chipsWrap.hidden = false;
+      chipsWrap.innerHTML = clips.map(function (c, i) {
+        return '<button type="button" class="clip-chip' + (i === clipIndex ? ' is-active' : '')
+          + '" data-i="' + i + '">' + icon('video') + '<span>' + esc(c.short) + '</span></button>';
+      }).join('');
+      $$('.clip-chip', chipsWrap).forEach(function (b) {
+        b.addEventListener('click', function () { setClip(+b.dataset.i); });
+      });
     }
+
+    function setClip(i) {
+      var c = clips[i];
+      clipIndex = i;
+
+      $('#modalTitle').textContent = c.title;
+      $('#modalRatio').textContent = c.ratio;
+      var tagEl = $('#modalTag');
+      if (tagEl) tagEl.textContent = c.tag || '';
+
+      var bd = $('#modalBreakdown');
+      if (bd) {
+        bd.style.display = c.breakdown ? '' : 'none';
+        if (c.breakdown) {
+          $('#mbChallenge').textContent = L(p.challenge);
+          $('#mbTech').textContent = L(p.technique);
+          $('#mbResult').textContent = L(p.result);
+        }
+      }
+
+      $('#modalTcVal').textContent = '00:00:00:00';
+      stage.classList.toggle('modal-stage--vertical', c.ratio === '9:16');
+
+      if (c.src && p.isEmbed) {
+        stage.innerHTML = '<iframe src="' + esc(c.src) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+      } else if (c.src) {
+        stage.innerHTML = '<video controls autoplay playsinline poster="' + esc(c.poster) + '">'
+          + '<source src="' + esc(c.src) + '" type="video/mp4"></video>';
+      } else {
+        stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>'
+          + (currentLang === 'ar' ? 'مفيش فيديو مرفوع لهذا المشروع بعد' : 'No video attached to this project yet')
+          + '</span></div>';
+      }
+
+      $$('.clip-chip', chipsWrap).forEach(function (b, k) {
+        b.classList.toggle('is-active', k === i);
+      });
+      sfx.click();
+    }
+
+    paintChips();
+    setClip(0);
     sfx.shutter();
     openModal();
   }
@@ -666,6 +736,10 @@
     sfx.toggle();
     cutFlash();
     renderAll();
+    /* لو المودال مفتوح وقت تبديل اللغة، عيد فتحه بلغة جديدة */
+    if ($('#videoModal') && $('#videoModal').classList.contains('is-open') && currentProjectId) {
+      openProjectModal(currentProjectId);
+    }
   }
 
   /* ------------------------- التواصل والفورم ------------------------- */

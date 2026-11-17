@@ -210,6 +210,7 @@ const SITE = {
         isEmbed: false,
         title: { ar: "براند ملابس — خلف الكواليس", en: "Fashion Brand — Behind The Scenes" },
         tag: { ar: "براند / أزياء", en: "Brand / Fashion" },
+        short: { ar: "خلف الكواليس", en: "Behind The Scenes" },
         challenge: {
           ar: "تحويل لقطات خلف الكواليس إلى محتوى يحمل هوية البراند ويشدّ المتابع في أول ثواني.",
           en: "Turn raw behind-the-scenes footage into content that carries the brand’s identity and holds attention from the first seconds."
@@ -221,7 +222,16 @@ const SITE = {
         result: {
           ar: "محتوى عمودي جاهز للنشر على حسابات البراند ويعكس أجواء جلسة التصوير.",
           en: "Vertical content ready for the brand’s channels, capturing the energy of the shoot."
-        }
+        },
+        extra: [
+          {
+            videoUrl: "assets/videos/montage-nike.mp4",
+            thumb: "assets/img/work-nike.jpg",
+            short: { ar: "عرض منتج — نايكي", en: "Nike Product Cut" },
+            title: { ar: "نايكي — عرض منتج لطقم رياضي", en: "Nike — Tracksuit Product Showcase" },
+            tag: { ar: "إعلان منتج / متجر رياضية", en: "Product Ad / Sportswear Store" }
+          }
+        ]
       }
     ]
   },
