@@ -15,7 +15,7 @@
 ## 2) هيكل الملفات
 
 ```
-weston-portfolio/
+nabhan-portfolio/
 ├─ index.html          ← الصفحة الرئيسية
 ├─ admin.html          ← لوحة تحكم (تعدّل منها بدون كود)
 ├─ css/style.css       ← التصميم
@@ -65,7 +65,7 @@ weston-portfolio/
 
 ### لو هترفع تحديث جديد
 ```bash
-cd "C:/Users/TDC/OneDrive/Desktop/weston-portfolio"
+cd "C:/Users/TDC/OneDrive/Desktop/nabhan-portfolio"
 git add -A
 git commit -m "update"
 git push origin main
