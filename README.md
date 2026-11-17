@@ -59,9 +59,9 @@ weston-portfolio/
 ## 5) الاستضافة المجانية (GitHub Pages)
 
 **الموقع شغال دلوقتي على:**
-👉 **https://vveston17.github.io/**
+👉 **https://vveston17.github.io/nabhan-portfolio/**
 
-المستودع: https://github.com/vveston17/vveston17.github.io
+المشروع: **Nabhan Portfolio** — المستودع: https://github.com/vveston17/nabhan-portfolio
 
 ### لو هترفع تحديث جديد
 ```bash
