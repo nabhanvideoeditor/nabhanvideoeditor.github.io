@@ -152,147 +152,75 @@ const SITE = {
        ---------------------------------------------------------------- */
     projects: [
       {
-        id: "proj-1",
+        id: "work-reels",
         category: "reels",
         aspectRatio: "9:16",
-        views: "1.4M Views",
-        tools: ["After Effects", "Premiere Pro"],
-        thumb: "assets/img/thumb-reel-1.svg",
-        videoUrl: "assets/videos/placeholder-vertical.mp4",
-        isEmbed: false,
-        title: { ar: "ريلز تقني عالي الاحتفاظ بالمشاهد", en: "High-Retention Tech & AI Reel" },
-        tag: { ar: "فيديو قصير / ريلز", en: "Short-Form / Viral Reel" },
-        challenge: {
-          ar: "الحفاظ على انتباه المشاهد في أول ثانيتين ونصف أثناء شرح أداة ذكاء اصطناعي معقدة.",
-          en: "Retain viewer attention on a dense AI software breakdown within the first 2.5 seconds on Instagram Reels."
-        },
-        technique: {
-          ar: "تحريك واجهات ثلاثية الأبعاد في After Effects، وتسريع لقطات احترافي (Speed Ramping)، ومؤثرات صوتية دقيقة.",
-          en: "Custom 3D UI pop-outs in After Effects, aggressive speed-ramps, kinetic captions, and tactile whoosh/riser SFX."
-        },
-        result: {
-          ar: "أكثر من 1.4 مليون مشاهدة عضوية، ونسبة إكمال مشاهدة 74%.",
-          en: "1.4M+ organic views, 74% average watch-through rate, and 18K+ saves."
-        }
-      },
-      {
-        id: "proj-2",
-        category: "documentary",
-        aspectRatio: "16:9",
-        views: "890K Views",
-        tools: ["Premiere Pro", "After Effects", "DaVinci"],
-        thumb: "assets/img/thumb-doc-1.svg",
-        videoUrl: "assets/videos/placeholder-showreel.mp4",
-        isEmbed: false,
-        title: { ar: "وثائقي يوتيوب: مستقبل الروبوتات الذكية", en: "The Rise of Autonomous Robotics — Mini-Doc" },
-        tag: { ar: "وثائقي / يوتيوب", en: "Documentary / YouTube" },
-        challenge: {
-          ar: "تحويل سكريبت مدته 28 دقيقة إلى فيلم وثائقي مشوق بإيقاع سينمائي جذاب.",
-          en: "Transform a 28-minute talking-head script into a gripping, cinema-paced YouTube documentary."
-        },
-        technique: {
-          ar: "تحريك خرائط 3D، ومشاهد أرشيفية بتأثير Parallax، وتلوين سينمائي عبر DaVinci Resolve.",
-          en: "3D map flythroughs, newspaper & archival parallax reveals, custom timeline graphics, and moody film color grading."
-        },
-        result: {
-          ar: "890 ألف مشاهدة خلال أسبوعين بمتوسط احتفاظ بالمشاهدين بلغ 62%.",
-          en: "890K views in 14 days with a 62% average percentage viewed across 24 minutes."
-        }
-      },
-      {
-        id: "proj-3",
-        category: "motion",
-        aspectRatio: "16:9",
-        views: "Commercial",
-        tools: ["After Effects", "Sound Design"],
-        thumb: "assets/img/thumb-motion-1.svg",
-        videoUrl: "assets/videos/placeholder-showreel.mp4",
-        isEmbed: false,
-        title: { ar: "جرافيك HUD وتتبع حركة ثلاثي الأبعاد", en: "Cyber-HUD & Planar Tracking Showcase" },
-        tag: { ar: "موشن جرافيك و HUD", en: "Motion Graphics & HUD" },
-        challenge: {
-          ar: "دمج بيانات ورسوم HUD مستقبلية بدقة متناهية على لقطات حركة سريعة بكاميرا محمولة.",
-          en: "Integrate futuristic telemetry HUD callouts seamlessly onto handheld outdoor sports footage."
-        },
-        technique: {
-          ar: "تتبع حركة ثلاثي الأبعاد (3D Camera Tracking) في After Effects مع تصميم مؤثرات صوتية مخصصة.",
-          en: "3D camera solve & planar motion tracking in After Effects with custom vector HUD elements and sub-bass impacts."
-        },
-        result: {
-          ar: "تم اعتماده في الحملة الإعلانية الرئيسية للعلامة التجارية وحقق 3.4x عائد إعلاني.",
-          en: "Featured in brand launch campaign across YouTube & paid social ads with 3.4x ROAS."
-        }
-      },
-      {
-        id: "proj-4",
-        category: "reels",
-        aspectRatio: "9:16",
-        views: "2.1M Views",
-        tools: ["After Effects", "Premiere Pro"],
-        thumb: "assets/img/thumb-reel-2.svg",
-        videoUrl: "assets/videos/placeholder-vertical.mp4",
-        isEmbed: false,
-        title: { ar: "مونتاج قصة مؤسس وبناء علامة شخصية", en: "Founder Story & Personal Brand Hook Edit" },
-        tag: { ar: "فيديو قصير / ريلز", en: "Short-Form / Viral Reel" },
-        challenge: {
-          ar: "تحويل تصوير خام من الهاتف إلى فيديو احترافي فخم يعكس قوة العلامة الشخصية.",
-          en: "Elevate raw studio iPhone footage into a premium, authority-building founder story."
-        },
-        technique: {
-          ar: "هندسة إيقاع الصوت (J-Cuts)، ودمج لقطات B-Roll سينمائية، وانتقالات متزامنة مع الإيقاع.",
-          en: "J-cut audio pacing, custom B-roll compositing, subtle film grain, and beat-synced transitions."
-        },
-        result: {
-          ar: "2.1 مليون مشاهدة وأكثر من 14 ألف متابع جديد مستهدف من فيديو واحد.",
-          en: "2.1M views and 14,000+ new targeted followers from a single vertical video."
-        }
-      },
-      {
-        id: "proj-5",
-        category: "motion",
-        aspectRatio: "16:9",
-        views: "SaaS Launch",
-        tools: ["After Effects", "Illustrator"],
-        thumb: "assets/img/thumb-motion-2.svg",
-        videoUrl: "assets/videos/placeholder-showreel.mp4",
-        isEmbed: false,
-        title: { ar: "فيديو إطلاق منصة تقنية مالية (SaaS)", en: "Fintech SaaS Product Launch Trailer" },
-        tag: { ar: "موشن جرافيك و HUD", en: "Motion Graphics & HUD" },
-        challenge: {
-          ar: "تبسيط آلية عمل منصة مالية متكاملة في 45 ثانية فقط بأسلوب بصري مبهر.",
-          en: "Explain a complex B2B financial workflow in 45 seconds without losing visual momentum."
-        },
-        technique: {
-          ar: "تحريك واجهات 2.5D باستخدام منحنيات Graph Editor احترافية ومؤثرات صوتية تفاعلية.",
-          en: "Custom Graph Editor easing, 2.5D UI card choreography, glowing crimson accents, and crisp foley."
-        },
-        result: {
-          ar: "تم وضعه في واجهة موقع الشركة الرئيسي ورفع نسبة طلبات التجربة بنسبة 28%.",
-          en: "Embedded on the client’s main hero landing page, lifting demo signups by 28%."
-        }
-      },
-      {
-        id: "proj-6",
-        category: "documentary",
-        aspectRatio: "16:9",
-        views: "640K Views",
+        views: "18 sec",
         tools: ["Premiere Pro", "After Effects"],
-        thumb: "assets/img/thumb-doc-2.svg",
-        videoUrl: "assets/videos/placeholder-showreel.mp4",
+        thumb: "assets/img/work-reels.jpg",
+        videoUrl: "assets/videos/montage-reels.mp4",
         isEmbed: false,
-        title: { ar: "مقال بصري: أسرار العمارة الحديثة", en: "Inside Modern Architecture — Video Essay" },
-        tag: { ar: "وثائقي / يوتيوب", en: "Documentary / YouTube" },
+        title: { ar: "ريلز تعليمي — «في عالم كل ثانية فيه محسوبة»", en: "Educational Reel — “Every Second Counts”" },
+        tag: { ar: "ريلز / محتوى تعليمي", en: "Short-Form / Educational" },
         challenge: {
-          ar: "إنتاج فيديو تحليلي يجمع بين الهدوء البصري والتشويق المستمر للمشاهد.",
-          en: "Create a meditative yet deeply engaging visual essay on brutalist & minimalist design."
+          ar: "تحويل شرح تحليلي إلى ريلز عمودي من ١٨ ثانية يشدّ المشاهد من أول إطار من غير ما يحس إنه محتوى طويل.",
+          en: "Turn an analytical explainer into an 18-second vertical reel that hooks viewers from the first frame without ever feeling rushed."
         },
         technique: {
-          ar: "انتقالات Match-Cuts ذكية، وتحريك مخططات هندسية، وهندسة صوتية محيطية.",
-          en: "Match-cut visual transitions, blueprint line-art animations, and spatial ambient sound design."
+          ar: "نصوص حركية متدرجة الألوان، وخريطة متحركة خلف المتحدث، وقصّ إيقاعي سريع، ومؤثرات صوتية مدروسة على اللحظات المفتاحية.",
+          en: "Kinetic colour-graded captions, a live map layer behind the speaker, tight rhythm cutting, and sound hits placed exactly on the key beats."
         },
         result: {
-          ar: "640 ألف مشاهدة عضوية وإشادة واسعة من صناع المحتوى الإبداعي.",
-          en: "640K organic views and featured across creative curation newsletters."
+          ar: "نسخة نهائية بدقة 1080×1920 مهيأة للنشر على إنستجرام وتيك توك ويوتيوب شورتس.",
+          en: "A final 1080×1920 cut, ready to publish across Instagram Reels, TikTok and YouTube Shorts."
+        }
+      },
+      {
+        id: "work-medical",
+        category: "reels",
+        aspectRatio: "9:16",
+        views: "32 sec",
+        tools: ["Premiere Pro", "DaVinci Resolve"],
+        thumb: "assets/img/work-medical.jpg",
+        videoUrl: "assets/videos/montage-medical.mp4",
+        isEmbed: false,
+        title: { ar: "إعلان عيادة أسنان — مونتاج سينمائي", en: "Dental Clinic Promo — Cinematic Cut" },
+        tag: { ar: "إعلان / قطاع طبي", en: "Commercial / Healthcare" },
+        challenge: {
+          ar: "توصيل إحساس الاحتراف والراحة في ٣٢ ثانية، من غير أي نص طويل أو شرح مباشر.",
+          en: "Communicate professionalism and calm within 32 seconds — with no long voiceover or direct explanation."
+        },
+        technique: {
+          ar: "إضاءة بلون تييل سينمائي، ولقطات مقربة للتفاصيل، وانتقالات ناعمة، وتلوين متجانس يوحّي بالنظافة والجودة.",
+          en: "Cinematic teal lighting, detail-driven close-ups, soft transitions, and a unified grade that reads as clean and premium."
+        },
+        result: {
+          ar: "فيديو عمودي 9:16 جاهز للنشر كإعلان على منصات التواصل.",
+          en: "A 9:16 vertical spot, ready to run as a paid social campaign."
+        }
+      },
+      {
+        id: "work-fashion",
+        category: "motion",
+        aspectRatio: "9:16",
+        views: "31 sec",
+        tools: ["Premiere Pro", "After Effects"],
+        thumb: "assets/img/work-fashion.jpg",
+        videoUrl: "assets/videos/montage-fashion.mp4",
+        isEmbed: false,
+        title: { ar: "براند ملابس — خلف الكواليس", en: "Fashion Brand — Behind The Scenes" },
+        tag: { ar: "براند / أزياء", en: "Brand / Fashion" },
+        challenge: {
+          ar: "تحويل لقطات خلف الكواليس إلى محتوى يحمل هوية البراند ويشدّ المتابع في أول ثواني.",
+          en: "Turn raw behind-the-scenes footage into content that carries the brand’s identity and holds attention from the first seconds."
+        },
+        technique: {
+          ar: "طبقة HUD تحاكي شاشة الكاميرا (REC + بطارية + إطارات تركيز)، وقصّ سريع على الإيقاع، ولقطات مقربة للتفاصيل.",
+          en: "A camera-HUD overlay (REC, battery, focus brackets), fast beat-synced cutting, and detail close-ups."
+        },
+        result: {
+          ar: "محتوى عمودي جاهز للنشر على حسابات البراند ويعكس أجواء جلسة التصوير.",
+          en: "Vertical content ready for the brand’s channels, capturing the energy of the shoot."
         }
       }
     ]
