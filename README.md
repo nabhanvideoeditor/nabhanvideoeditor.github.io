@@ -58,12 +58,29 @@ weston-portfolio/
 
 ## 5) الاستضافة المجانية (GitHub Pages)
 
-1. اعمل مستودع على GitHub (أو استخدم `gh repo create`).
-2. ارفع محتوى هذا المجلد (main / root).
-3. Settings ← Pages ← Source: **Deploy from a branch** ← `main` / `(root)` ← Save.
-4. بعد دقيقة يفتح على: `https://<username>.github.io/<repo>/`
-5. عدّل `sitemap.xml` و `robots.txt` بالرابط النهائي، وارفعهم تاني.
-6. من Google Search Console أرسل الرابط لفهرسته.
+**الموقع شغال دلوقتي على:**
+👉 **https://vveston17.github.io/**
+
+المستودع: https://github.com/vveston17/vveston17.github.io
+
+### لو هترفع تحديث جديد
+```bash
+cd "C:/Users/TDC/OneDrive/Desktop/weston-portfolio"
+git add -A
+git commit -m "update"
+git push origin main
+```
+بعد دقيقة يتحدث الموقع أوتوماتيك.
+
+### عشان يظهر في جوجل
+1. افتح https://search.google.com/search-console
+2. أضف الـ Property بعنوان `https://vveston17.github.io`
+3. اتحقق (HTML tag أو DNS).
+4. من **URL Inspection** اكتب الرابط واضغط **Request Indexing**.
+أو استنى عدة أيام — جوجل بيدور تلقائيًا.
+
+> ملاحظة: ممكن تاخد من يوم لأسبوعين قبل ما يظهر في نتائج البحث.
+
 
 ---
 
