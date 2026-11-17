@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  قبل الرفع: استبدل YOUR-DOMAIN-HERE بالرابط النهائي للموقع
+  مثال: https://nabhan.github.io أو https://nabhan.github.io/nabhan
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://YOUR-DOMAIN-HERE/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

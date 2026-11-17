@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم الموقع — نبهان</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #09090B; color: #FAFAFA;
+    font-family: "Panorama Naskh", "Segoe UI", Tahoma, sans-serif;
+    font-size: 15px; line-height: 1.7;
+  }
+  .top {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 16px 24px; background: rgba(9,9,11,.92);
+    backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .top-brand { display: flex; align-items: center; gap: 12px; }
+  .top-brand img { width: 38px; height: 38px; border-radius: 10px; }
+  .top-brand h1 { font-size: 1.05rem; margin: 0; }
+  .top-brand p { margin: 0; color: #A1A1AA; font-size: .78rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12);
+    background: #121215; color: #FAFAFA; font: inherit; font-size: .85rem; font-weight: 700;
+    cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .btn:hover { background: #18181C; border-color: rgba(255,255,255,.25); }
+  .btn-primary { background: #DC2626; border-color: #DC2626; color: #fff; }
+  .btn-primary:hover { background: #991B1B; border-color: #991B1B; }
+  .btn-danger { color: #FCA5A5; }
+  .btn-xs { padding: 6px 10px; font-size: .75rem; border-radius: 8px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 90px; }
+  .hint {
+    background: rgba(220,38,38,.08); border: 1px solid rgba(220,38,38,.28);
+    border-radius: 12px; padding: 14px 18px; margin-bottom: 26px;
+    color: #FECACA; font-size: .88rem;
+  }
+  .hint b { color: #fff; }
+
+  .card {
+    background: #121215; border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px; padding: 22px; margin-bottom: 22px;
+  }
+  .card > h2 {
+    font-size: 1.05rem; margin: 0 0 4px; display: flex; align-items: center; gap: 10px;
+  }
+  .card > h2 .n {
+    font-family: ui-monospace, monospace; font-size: .72rem; color: #DC2626; letter-spacing: .1em;
+  }
+  .card > p.desc { color: #A1A1AA; font-size: .82rem; margin: 0 0 18px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 760px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  .fld { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .fld > span { font-size: .75rem; color: #A1A1AA; font-weight: 700; }
+  .fld input[type=text], .fld input[type=url], .fld input[type=number], .fld input[type=color],
+  .fld select, .fld textarea {
+    width: 100%; padding: 10px 12px; border-radius: 9px;
+    background: #09090B; border: 1px solid rgba(255,255,255,.12);
+    color: #FAFAFA; font: inherit; font-size: .9rem;
+  }
+  .fld textarea { min-height: 78px; resize: vertical; }
+  .fld input:focus, .fld select:focus, .fld textarea:focus {
+    outline: none; border-color: #DC2626; box-shadow: 0 0 0 3px rgba(220,38,38,.15);
+  }
+  .fld input[type=color] { height: 42px; padding: 4px; cursor: pointer; }
+  .fld-inline { display: flex; align-items: center; gap: 10px; }
+  .fld-inline input { width: auto; }
+  .fld-inline span { font-size: .82rem; color: #A1A1AA; }
+  .bi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 560px) { .bi { grid-template-columns: 1fr; } }
+
+  .item {
+    position: relative; border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px; padding: 16px; margin-bottom: 14px; background: rgba(255,255,255,.02);
+  }
+  .item-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px;
+  }
+  .item-head b { font-family: ui-monospace, monospace; font-size: .78rem; color: #DC2626; }
+  .item-tools { display: flex; gap: 6px; }
+  .add-row { margin-top: 6px; }
+
+  .toast {
+    position: fixed; bottom: 24px; inset-inline-start: 50%; transform: translateX(-50%) translateY(20px);
+    background: #18181C; border: 1px solid rgba(255,255,255,.16); color: #FAFAFA;
+    padding: 13px 22px; border-radius: 12px; font-size: .9rem;
+    opacity: 0; visibility: hidden; transition: all .3s ease; z-index: 50;
+    box-shadow: 0 20px 40px -18px rgba(0,0,0,.8); max-width: 90vw;
+  }
+  .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .toast.ok { border-color: rgba(16,185,129,.5); }
+  .toast.err { border-color: rgba(220,38,38,.6); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-brand">
+    <img src="assets/img/logo.svg" alt="logo">
+    <div>
+      <h1>لوحة تحكم الموقع</h1>
+      <p>عدّل المحتوى، وبعدين حمّل ملف content.js الجديد</p>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn" href="index.html" target="_blank" rel="noopener">معاينة الموقع</a>
+    <label class="btn" for="importFile">استيراد content.js</label>
+    <input type="file" id="importFile" accept=".js,text/javascript" hidden>
+    <button class="btn btn-primary" id="saveBtn" type="button">تنزيل content.js</button>
+    <button class="btn btn-danger" id="resetBtn" type="button">إعادة تعيين</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hint">
+    <b>طريقة الاستخدام:</b> عدّل الحقول هنا، اضغط <b>تنزيل content.js</b>، وبعدين انقل الملف اللي اتنزل
+    للمجلد <b>js</b> واستبدل الملف القديم. لو عندك مشاريع بفيديو، حط الفيديو في مجلد
+    <b>assets/videos</b> والصورة في <b>assets/img</b> واكتب اسم الملف في الحقل.
+  </div>
+
+  <div id="adminForm"></div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/content.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------- أدوات ------------------------- */
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(v) {
+    return String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function getByPath(o, p) { return p.split('.').reduce(function (a, k) { return a[k]; }, o); }
+  function setByPath(o, p, v) {
+    var ks = p.split('.'), i;
+    for (i = 0; i < ks.length - 1; i++) o = o[ks[i]];
+    o[ks[ks.length - 1]] = v;
+  }
+
+  var draft = clone(SITE);
+
+  var toastTimer;
+  function toast(msg, kind) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + (kind || 'ok');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.className = 'toast'; }, 3200);
+  }
+
+  /* ------------------------- عناصر جاهزة ------------------------- */
+  var CATEGORIES = [
+    ['reels', 'ريلز / فيديو قصير'],
+    ['documentary', 'وثائقي / يوتيوب'],
+    ['motion', 'موشن جرافيك / HUD']
+  ];
+  var RATIOS = [['16:9', '16:9 أفقي'], ['9:16', '9:16 عمودي']];
+  var SVC_ICONS = [['bolt', 'برق (ريلز)'], ['film', 'فيلم (يوتيوب)'], ['bezier', 'منحنى (موشن)']];
+  var SOCIAL_ICONS = [
+    ['instagram', 'Instagram'], ['tiktok', 'TikTok'], ['youtube', 'YouTube'],
+    ['facebook', 'Facebook'], ['x', 'X'], ['linkedin', 'LinkedIn'],
+    ['behance', 'Behance'], ['vimeo', 'Vimeo']
+  ];
+
+  function opts(list, current) {
+    return list.map(function (o) {
+      return '<option value="' + o[0] + '"' + (String(current) === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
+    }).join('');
+  }
+
+  /* ------------------------- محددات حقول ------------------------- */
+  function fld(label, path, value, type) {
+    type = type || 'text';
+    var v = esc(value);
+    var input;
+    if (type === 'textarea') {
+      input = '<textarea data-path="' + path + '">' + v + '</textarea>';
+    } else if (type === 'color') {
+      input = '<input type="color" data-path="' + path + '" value="' + v + '">';
+    } else if (type === 'url') {
+      input = '<input type="url" data-path="' + path + '" value="' + v + '" placeholder="https:// أو assets/...">';
+    } else {
+      input = '<input type="text" data-path="' + path + '" value="' + v + '">';
+    }
+    return '<label class="fld"><span>' + esc(label) + '</span>' + input + '</label>';
+  }
+
+  function bi(labelAr, labelEn, base, key) {
+    var obj = getByPath(draft, base) || { ar: '', en: '' };
+    return '<div class="bi">'
+      + '<label class="fld"><span>' + esc(labelAr) + ' (عربي)</span><input type="text" data-path="' + base + '.ar" value="' + esc(obj.ar) + '"></label>'
+      + '<label class="fld"><span>' + esc(labelEn) + ' (English)</span><input type="text" data-path="' + base + '.en" value="' + esc(obj.en) + '"></label>'
+      + '</div>';
+  }
+  function biArea(labelAr, labelEn, base) {
+    var obj = getByPath(draft, base) || { ar: '', en: '' };
+    return '<div class="bi">'
+      + '<label class="fld"><span>' + esc(labelAr) + ' (عربي)</span><textarea data-path="' + base + '.ar">' + esc(obj.ar) + '</textarea></label>'
+      + '<label class="fld"><span>' + esc(labelEn) + ' (English)</span><textarea data-path="' + base + '.en">' + esc(obj.en) + '</textarea></label>'
+      + '</div>';
+  }
+  function chk(label, path, checked) {
+    return '<label class="fld-inline"><input type="checkbox" data-path="' + path + '"' + (checked ? ' checked' : '') + '><span>' + esc(label) + '</span></label>';
+  }
+  function card(num, title, desc, inner) {
+    return '<section class="card"><h2><span class="n">' + num + '</span>' + esc(title) + '</h2>'
+      + (desc ? '<p class="desc">' + esc(desc) + '</p>' : '') + inner + '</section>';
+  }
+
+  /* ------------------------- الأقسام ------------------------- */
+  function secGeneral() {
+    return card('01', 'البيانات الأساسية', 'اسم البراند وصاحب الموقع وبيانات الصفحة.', ''
+      + '<div class="bi">'
+      +   '<label class="fld"><span>اسم البراند (عربي)</span><input type="text" data-path="meta.brand.ar" value="' + esc(draft.meta.brand.ar) + '"></label>'
+      +   '<label class="fld"><span>اسم البراند (English)</span><input type="text" data-path="meta.brand.en" value="' + esc(draft.meta.brand.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>اسم المالك (عربي)</span><input type="text" data-path="meta.owner_ar" value="' + esc(draft.meta.owner_ar) + '"></label>'
+      +   '<label class="fld"><span>اسم المالك (English)</span><input type="text" data-path="meta.owner_en" value="' + esc(draft.meta.owner_en) + '"></label>'
+      + '</div>'
+      + biArea('عنوان الصفحة (عربي)', 'Page title (English)', 'meta.title')
+      + biArea('وصف الموقع (عربي)', 'Site description (English)', 'meta.description')
+      + '<div class="bi">'
+      +   '<label class="fld"><span>اللغة الافتراضية</span><select data-path="meta.defaultLang">'
+      +     '<option value="ar"' + (draft.meta.defaultLang === 'ar' ? ' selected' : '') + '>العربية</option>'
+      +     '<option value="en"' + (draft.meta.defaultLang === 'en' ? ' selected' : '') + '>English</option>'
+      +   '</select></label>'
+      +   '<div class="fld"><span>ألوان الهوية</span><div class="bi">'
+      +     '<label class="fld"><span>اللون الأساسي</span><input type="color" data-path="meta.accent" value="' + esc(draft.meta.accent) + '"></label>'
+      +     '<label class="fld"><span>اللون الغامق</span><input type="color" data-path="meta.accentDark" value="' + esc(draft.meta.accentDark) + '"></label>'
+      +   '</div></div>'
+      + '</div>'
+      + biArea('حقوق النشر (عربي)', 'Copyright (English)', 'footer.copy')
+      + bi('سطر الفوتر (عربي)', 'Footer tagline (English)', 'footer.tag')
+    );
+  }
+
+  function secHero() {
+    return card('02', 'الشاشة الأولى (Hero)', 'العنوان والوصف والأزرار والأرقام.', ''
+      + bi('شارة الحالة (عربي)', 'Status badge (English)', 'hero.badge')
+      + bi('العنوان — الجزء الأول (عربي)', 'Title part 1 (English)', 'hero.title1')
+      + bi('العنوان — الجزء المميز (عربي)', 'Title highlight (English)', 'hero.highlight')
+      + biArea('الوصف (عربي)', 'Subtitle (English)', 'hero.subtitle')
+      + '<div class="bi">'
+      +   '<label class="fld"><span>نص زر الشوريل (عربي)</span><input type="text" data-path="hero.btn_reel.ar" value="' + esc(draft.hero.btn_reel.ar) + '"></label>'
+      +   '<label class="fld"><span>نص زر الشوريل (English)</span><input type="text" data-path="hero.btn_reel.en" value="' + esc(draft.hero.btn_reel.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>نص زر الأعمال (عربي)</span><input type="text" data-path="hero.btn_work.ar" value="' + esc(draft.hero.btn_work.ar) + '"></label>'
+      +   '<label class="fld"><span>نص زر الأعمال (English)</span><input type="text" data-path="hero.btn_work.en" value="' + esc(draft.hero.btn_work.en) + '"></label>'
+      + '</div>'
+    );
+  }
+
+  function secStats() {
+    var items = draft.hero.stats.map(function (st, i) {
+      return '<div class="item"><div class="item-head"><b>إحصائية ' + (i + 1) + '</b>'
+        + '<div class="item-tools">'
+        +   '<button class="btn btn-xs" data-act="up" data-list="hero.stats" data-idx="' + i + '" type="button">أعلى</button>'
+        +   '<button class="btn btn-xs" data-act="down" data-list="hero.stats" data-idx="' + i + '" type="button">أسفل</button>'
+        +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="hero.stats" data-idx="' + i + '" type="button">حذف</button>'
+        + '</div></div>'
+        + '<div class="bi">'
+        +   '<label class="fld"><span>الرقم</span><input type="text" data-path="hero.stats.' + i + '.value" value="' + esc(st.value) + '"></label>'
+        +   '<label class="fld"><span>اللاحقة (+ أو % أو h)</span><input type="text" data-path="hero.stats.' + i + '.suffix" value="' + esc(st.suffix) + '"></label>'
+        + '</div>'
+        + '<div class="bi">'
+        +   '<label class="fld"><span>الوصف (عربي)</span><input type="text" data-path="hero.stats.' + i + '.ar" value="' + esc(st.ar) + '"></label>'
+        +   '<label class="fld"><span>الوصف (English)</span><input type="text" data-path="hero.stats.' + i + '.en" value="' + esc(st.en) + '"></label>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+
+    return card('03', 'الإحصائيات', 'الأرقام اللي بتظهر تحت الزرارين في أول الصفحة.', ''
+      + items
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="hero.stats" type="button">+ إضافة إحصائية</button></div>'
+    );
+  }
+
+  function secShowreel() {
+    return card('04', 'الشوريل (Showreel)', 'الفيديو اللي يشتغل من زرار "شاهد الشوريل".', ''
+      + '<label class="fld"><span>رابط الفيديو</span><input type="text" data-path="showreel.videoUrl" value="' + esc(draft.showreel.videoUrl) + '" placeholder="assets/videos/showreel.mp4"></label>'
+      + '<label class="fld"><span>صورة الغلاف (poster)</span><input type="text" data-path="showreel.poster" value="' + esc(draft.showreel.poster) + '" placeholder="assets/img/hero-poster.svg"></label>'
+      + chk('الرابط ده يوتيوب/فايمو (embed)', 'showreel.isEmbed', draft.showreel.isEmbed)
+      + '<div class="bi">'
+      +   '<label class="fld"><span>عنوان الشوريل (عربي)</span><input type="text" data-path="showreel.title_ar" value="' + esc(draft.showreel.title_ar) + '"></label>'
+      +   '<label class="fld"><span>عنوان الشوريل (English)</span><input type="text" data-path="showreel.title_en" value="' + esc(draft.showreel.title_en) + '"></label>'
+      + '</div>'
+    );
+  }
+
+  function secWork() {
+    var f = draft.work.filters;
+    var note = ''
+      + bi('العنوان الصغير العلوي (عربي)', 'Eyebrow (English)', 'work.eyebrow')
+      + bi('عنوان القسم (عربي)', 'Section title (English)', 'work.title')
+      + bi('نص زر المعاينة (عربي)', 'Card button (English)', 'work.card_watch')
+      + biArea('ملاحظة أسفل القسم (عربي)', 'Note under grid (English)', 'work.note')
+      + chk('إظهار الملاحظة أسفل الشبكة', 'work.showNote', draft.work.showNote)
+      + '<div class="bi">'
+      +   '<label class="fld"><span>فلتر "الكل" (عربي)</span><input type="text" data-path="work.filters.all.ar" value="' + esc(f.all.ar) + '"></label>'
+      +   '<label class="fld"><span>فلتر "الكل" (English)</span><input type="text" data-path="work.filters.all.en" value="' + esc(f.all.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>فلتر "ريلز" (عربي)</span><input type="text" data-path="work.filters.reels.ar" value="' + esc(f.reels.ar) + '"></label>'
+      +   '<label class="fld"><span>فلتر "ريلز" (English)</span><input type="text" data-path="work.filters.reels.en" value="' + esc(f.reels.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>فلتر "وثائقي" (عربي)</span><input type="text" data-path="work.filters.documentary.ar" value="' + esc(f.documentary.ar) + '"></label>'
+      +   '<label class="fld"><span>فلتر "وثائقي" (English)</span><input type="text" data-path="work.filters.documentary.en" value="' + esc(f.documentary.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>فلتر "موشن" (عربي)</span><input type="text" data-path="work.filters.motion.ar" value="' + esc(f.motion.ar) + '"></label>'
+      +   '<label class="fld"><span>فلتر "موشن" (English)</span><input type="text" data-path="work.filters.motion.en" value="' + esc(f.motion.en) + '"></label>'
+      + '</div>';
+
+    return card('05', 'قسم الأعمال', 'نصوص القسم والفلاتر.', note);
+  }
+
+  function projectItem(p, i) {
+    var tools = (p.tools || []).join(', ');
+    return '<div class="item"><div class="item-head"><b>مشروع ' + (i + 1) + '</b>'
+      + '<div class="item-tools">'
+      +   '<button class="btn btn-xs" data-act="up" data-list="work.projects" data-idx="' + i + '" type="button">أعلى</button>'
+      +   '<button class="btn btn-xs" data-act="down" data-list="work.projects" data-idx="' + i + '" type="button">أسفل</button>'
+      +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="work.projects" data-idx="' + i + '" type="button">حذف</button>'
+      + '</div></div>'
+
+      + '<div class="grid3">'
+      +   '<label class="fld"><span>المعرف id</span><input type="text" data-path="work.projects.' + i + '.id" value="' + esc(p.id) + '"></label>'
+      +   '<label class="fld"><span>التصنيف</span><select data-path="work.projects.' + i + '.category">' + opts(CATEGORIES, p.category) + '</select></label>'
+      +   '<label class="fld"><span>الأبعاد</span><select data-path="work.projects.' + i + '.aspectRatio">' + opts(RATIOS, p.aspectRatio) + '</select></label>'
+      + '</div>'
+
+      + '<div class="grid2">'
+      +   '<label class="fld"><span>عدد المشاهدات / نوع المشروع</span><input type="text" data-path="work.projects.' + i + '.views" value="' + esc(p.views) + '" placeholder="1.2M Views"></label>'
+      +   '<label class="fld"><span>البرامج (افصل بفاصلة)</span><input type="text" data-path="work.projects.' + i + '.tools" value="' + esc(tools) + '" data-parse="tags"></label>'
+      + '</div>'
+
+      + '<div class="grid2">'
+      +   '<label class="fld"><span>صورة الغلاف</span><input type="text" data-path="work.projects.' + i + '.thumb" value="' + esc(p.thumb) + '" placeholder="assets/img/thumb.jpg"></label>'
+      +   '<label class="fld"><span>رابط الفيديو</span><input type="text" data-path="work.projects.' + i + '.videoUrl" value="' + esc(p.videoUrl) + '" placeholder="assets/videos/xxx.mp4 أو رابط يوتيوب embed"></label>'
+      + '</div>'
+      + chk('يوتيوب/فايمو (embed)', 'work.projects.' + i + '.isEmbed', p.isEmbed)
+
+      + '<div class="bi">'
+      +   '<label class="fld"><span>اسم المشروع (عربي)</span><input type="text" data-path="work.projects.' + i + '.title.ar" value="' + esc(p.title.ar) + '"></label>'
+      +   '<label class="fld"><span>اسم المشروع (English)</span><input type="text" data-path="work.projects.' + i + '.title.en" value="' + esc(p.title.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>التصنيف النصي (عربي)</span><input type="text" data-path="work.projects.' + i + '.tag.ar" value="' + esc(p.tag.ar) + '"></label>'
+      +   '<label class="fld"><span>التصنيف النصي (English)</span><input type="text" data-path="work.projects.' + i + '.tag.en" value="' + esc(p.tag.en) + '"></label>'
+      + '</div>'
+
+      + biArea('التحدي (عربي)', 'Challenge (English)', 'work.projects.' + i + '.challenge')
+      + biArea('أسلوب التنفيذ (عربي)', 'Technique (English)', 'work.projects.' + i + '.technique')
+      + biArea('النتيجة (عربي)', 'Result (English)', 'work.projects.' + i + '.result')
+      + '</div>';
+  }
+
+  function secProjects() {
+    var items = draft.work.projects.map(projectItem).join('');
+    return card('06', 'المشاريع', 'إضافة وتعديل وحذف مشاريع الأعمال (صورة + فيديو + وصف).', ''
+      + items
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="work.projects" type="button">+ إضافة مشروع جديد</button></div>'
+    );
+  }
+
+  function secServices() {
+    var items = draft.services.items.map(function (s, i) {
+      var feats = (s.features || []).map(function (f) { return f.ar + ' | ' + f.en; }).join('\n');
+      return '<div class="item"><div class="item-head"><b>خدمة ' + (i + 1) + '</b>'
+        + '<div class="item-tools">'
+        +   '<button class="btn btn-xs" data-act="up" data-list="services.items" data-idx="' + i + '" type="button">أعلى</button>'
+        +   '<button class="btn btn-xs" data-act="down" data-list="services.items" data-idx="' + i + '" type="button">أسفل</button>'
+        +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="services.items" data-idx="' + i + '" type="button">حذف</button>'
+        + '</div></div>'
+        + '<div class="grid3">'
+        +   '<label class="fld"><span>الرقم</span><input type="text" data-path="services.items.' + i + '.num" value="' + esc(s.num) + '"></label>'
+        +   '<label class="fld"><span>النسبة</span><input type="text" data-path="services.items.' + i + '.ratio" value="' + esc(s.ratio) + '"></label>'
+        +   '<label class="fld"><span>الأيقونة</span><select data-path="services.items.' + i + '.icon">' + opts(SVC_ICONS, s.icon) + '</select></label>'
+        + '</div>'
+        + chk('خدمة مميزة (Most Requested)', 'services.items.' + i + '.popular', s.popular)
+        + bi('اسم الخدمة (عربي)', 'Service title (English)', 'services.items.' + i + '.title')
+        + biArea('وصف الخدمة (عربي)', 'Service description (English)', 'services.items.' + i + '.desc')
+        + '<label class="fld"><span>المميزات — سطر لكل ميزة بالصيغة: عربي | English</span>'
+        + '<textarea data-path="services.items.' + i + '.features" data-parse="lines">' + esc(feats) + '</textarea></label>'
+        + '</div>';
+    }).join('');
+
+    return card('07', 'الخدمات', 'كروت الخدمات الثلاثة ومميزاتها.', ''
+      + bi('العنوان الصغير (عربي)', 'Eyebrow (English)', 'services.eyebrow')
+      + bi('عنوان القسم (عربي)', 'Section title (English)', 'services.title')
+      + biArea('وصف القسم (عربي)', 'Section subtitle (English)', 'services.subtitle')
+      + '<div class="bi">'
+      +   '<label class="fld"><span>شارة "الأكثر طلباً" (عربي)</span><input type="text" data-path="services.popular.ar" value="' + esc(draft.services.popular.ar) + '"></label>'
+      +   '<label class="fld"><span>شارة "الأكثر طلباً" (English)</span><input type="text" data-path="services.popular.en" value="' + esc(draft.services.popular.en) + '"></label>'
+      + '</div>'
+      + '<div class="bi">'
+      +   '<label class="fld"><span>نص زر الطلب (عربي)</span><input type="text" data-path="services.cta.ar" value="' + esc(draft.services.cta.ar) + '"></label>'
+      +   '<label class="fld"><span>نص زر الطلب (English)</span><input type="text" data-path="services.cta.en" value="' + esc(draft.services.cta.en) + '"></label>'
+      + '</div>'
+      + items
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="services.items" type="button">+ إضافة خدمة</button></div>'
+    );
+  }
+
+  function secTools() {
+    var items = draft.tools.items.map(function (t, i) {
+      return '<div class="item"><div class="item-head"><b>أداة ' + (i + 1) + '</b>'
+        + '<div class="item-tools">'
+        +   '<button class="btn btn-xs" data-act="up" data-list="tools.items" data-idx="' + i + '" type="button">أعلى</button>'
+        +   '<button class="btn btn-xs" data-act="down" data-list="tools.items" data-idx="' + i + '" type="button">أسفل</button>'
+        +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="tools.items" data-idx="' + i + '" type="button">حذف</button>'
+        + '</div></div>'
+        + '<div class="grid3">'
+        +   '<label class="fld"><span>الاختصار</span><input type="text" data-path="tools.items.' + i + '.abbr" value="' + esc(t.abbr) + '" placeholder="Ae"></label>'
+        +   '<label class="fld"><span>الاسم</span><input type="text" data-path="tools.items.' + i + '.name" value="' + esc(t.name) + '"></label>'
+        +   '<label class="fld"><span>لون الاختصار</span><input type="color" data-path="tools.items.' + i + '.color" value="' + esc(t.color) + '"></label>'
+        + '</div>'
+        + '<label class="fld"><span>شارة صغيرة (اختياري)</span><input type="text" data-path="tools.items.' + i + '.badge" value="' + esc(t.badge) + '" placeholder="PRIMARY"></label>'
+        + biArea('الوصف (عربي)', 'Description (English)', 'tools.items.' + i + '.desc')
+        + '</div>';
+    }).join('');
+
+    return card('08', 'الأدوات', 'ترسانة البرامج.', ''
+      + bi('العنوان الصغير (عربي)', 'Eyebrow (English)', 'tools.eyebrow')
+      + bi('عنوان القسم (عربي)', 'Section title (English)', 'tools.title')
+      + biArea('وصف القسم (عربي)', 'Section subtitle (English)', 'tools.subtitle')
+      + items
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="tools.items" type="button">+ إضافة أداة</button></div>'
+    );
+  }
+
+  function secWorkflow() {
+    var items = draft.workflow.steps.map(function (st, i) {
+      return '<div class="item"><div class="item-head"><b>خطوة ' + (i + 1) + '</b>'
+        + '<div class="item-tools">'
+        +   '<button class="btn btn-xs" data-act="up" data-list="workflow.steps" data-idx="' + i + '" type="button">أعلى</button>'
+        +   '<button class="btn btn-xs" data-act="down" data-list="workflow.steps" data-idx="' + i + '" type="button">أسفل</button>'
+        +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="workflow.steps" data-idx="' + i + '" type="button">حذف</button>'
+        + '</div></div>'
+        + '<label class="fld"><span>الرقم</span><input type="text" data-path="workflow.steps.' + i + '.num" value="' + esc(st.num) + '"></label>'
+        + bi('عنوان الخطوة (عربي)', 'Step title (English)', 'workflow.steps.' + i + '.title')
+        + biArea('وصف الخطوة (عربي)', 'Step description (English)', 'workflow.steps.' + i + '.desc')
+        + '</div>';
+    }).join('');
+
+    return card('09', 'خطوات العمل', 'المراحل الأربعة.', ''
+      + bi('العنوان الصغير (عربي)', 'Eyebrow (English)', 'workflow.eyebrow')
+      + bi('عنوان القسم (عربي)', 'Section title (English)', 'workflow.title')
+      + items
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="workflow.steps" type="button">+ إضافة خطوة</button></div>'
+    );
+  }
+
+  function secContact() {
+    var c = draft.contact;
+    var socials = c.socials.map(function (s, i) {
+      return '<div class="item"><div class="item-head"><b>رابط ' + (i + 1) + '</b>'
+        + '<div class="item-tools">'
+        +   '<button class="btn btn-xs btn-danger" data-act="del" data-list="contact.socials" data-idx="' + i + '" type="button">حذف</button>'
+        + '</div></div>'
+        + '<div class="grid3">'
+        +   '<label class="fld"><span>الأيقونة</span><select data-path="contact.socials.' + i + '.icon">' + opts(SOCIAL_ICONS, s.icon) + '</select></label>'
+        +   '<label class="fld"><span>الاسم</span><input type="text" data-path="contact.socials.' + i + '.label" value="' + esc(s.label) + '"></label>'
+        +   '<label class="fld"><span>الرابط</span><input type="text" data-path="contact.socials.' + i + '.url" value="' + esc(s.url) + '" placeholder="https://..."></label>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+
+    var types = c.form.types.map(function (t) { return t.ar + ' | ' + t.en; }).join('\n');
+
+    return card('10', 'التواصل والفورم', 'واتساب وبريد وروابط اجتماعية ونماذج الفورم.', ''
+      + bi('العنوان الصغير (عربي)', 'Eyebrow (English)', 'contact.eyebrow')
+      + bi('عنوان القسم (عربي)', 'Section title (English)', 'contact.title')
+      + biArea('وصف القسم (عربي)', 'Section subtitle (English)', 'contact.subtitle')
+      + '<div class="grid3">'
+      +   '<label class="fld"><span>رقم واتساب (بكود الدولة بدون +)</span><input type="text" data-path="contact.whatsapp_number" value="' + esc(c.whatsapp_number) + '" placeholder="201212439985"></label>'
+      +   '<label class="fld"><span>شكل الرقم المعروض</span><input type="text" data-path="contact.whatsapp_display" value="' + esc(c.whatsapp_display) + '" placeholder="+20 121 243 9985"></label>'
+      +   '<label class="fld"><span>البريد الإلكتروني</span><input type="text" data-path="contact.email" value="' + esc(c.email) + '"></label>'
+      + '</div>'
+      + bi('عنوان واتساب (عربي)', 'WhatsApp label (English)', 'contact.whatsapp_label')
+      + bi('عنوان البريد (عربي)', 'Email label (English)', 'contact.email_label')
+      + bi('عنوان السوشيال (عربي)', 'Socials label (English)', 'contact.socials_label')
+      + socials
+      + '<div class="add-row"><button class="btn btn-xs" data-act="add" data-list="contact.socials" type="button">+ إضافة رابط</button></div>'
+
+      + '<h2 style="margin:22px 0 12px;font-size:.95rem">نصوص الفورم</h2>'
+      + bi('تسمية حقل الاسم (عربي)', 'Name label (English)', 'contact.form.name_label')
+      + bi('تسمية حقل التواصل (عربي)', 'Contact label (English)', 'contact.form.email_label')
+      + bi('تسمية نوع المشروع (عربي)', 'Type label (English)', 'contact.form.type_label')
+      + bi('تسمية رابط المرجع (عربي)', 'Reference label (English)', 'contact.form.ref_label')
+      + bi('تسمية تفاصيل المشروع (عربي)', 'Brief label (English)', 'contact.form.msg_label')
+      + bi('نص زر الإرسال (عربي)', 'Submit label (English)', 'contact.form.submit')
+      + bi('عنوان النجاح (عربي)', 'Success title (English)', 'contact.form.ok_title')
+      + biArea('رسالة النجاح (عربي)', 'Success message (English)', 'contact.form.ok_desc')
+      + bi('نص زر إعادة الإرسال (عربي)', 'Reset label (English)', 'contact.form.reset')
+      + '<label class="fld"><span>اختيارات "نوع المشروع" — سطر لكل اختيار: عربي | English</span>'
+      + '<textarea data-path="contact.form.types" data-parse="lines">' + esc(types) + '</textarea></label>'
+    );
+  }
+
+  /* ------------------------- العرض ------------------------- */
+  function render() {
+    $('#adminForm').innerHTML = [
+      secGeneral(), secHero(), secStats(), secShowreel(), secWork(),
+      secProjects(), secServices(), secTools(), secWorkflow(), secContact()
+    ].join('');
+  }
+
+  /* ------------------------- جمع القيم ------------------------- */
+  function collect() {
+    $$('[data-path]').forEach(function (el) {
+      var p = el.getAttribute('data-path');
+      var v = el.value;
+      if (el.type === 'checkbox') v = el.checked;
+      if (el.getAttribute('data-parse') === 'tags') {
+        v = v.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      } else if (el.getAttribute('data-parse') === 'lines') {
+        v = v.split('\n').map(function (line) {
+          var idx = line.indexOf(' | ');
+          if (idx === -1) return null;
+          return { ar: line.slice(0, idx).trim(), en: line.slice(idx + 3).trim() };
+        }).filter(Boolean);
+      }
+      setByPath(draft, p, v);
+    });
+  }
+
+  /* ------------------------- عمليات القوايم ------------------------- */
+  var makers = {
+    'hero.stats': function () { return { value: '0', suffix: '+', ar: '', en: '' }; },
+    'work.projects': function (i) {
+      return {
+        id: 'proj-' + (i + 1), category: 'reels', aspectRatio: '9:16', views: '', tools: ['After Effects'],
+        thumb: 'assets/img/thumb-reel-1.svg', videoUrl: '', isEmbed: false,
+        title: { ar: '', en: '' }, tag: { ar: '', en: '' },
+        challenge: { ar: '', en: '' }, technique: { ar: '', en: '' }, result: { ar: '', en: '' }
+      };
+    },
+    'services.items': function () {
+      return { num: '04', ratio: '16:9', icon: 'bolt', popular: false, title: { ar: '', en: '' }, desc: { ar: '', en: '' }, features: [{ ar: '', en: '' }] };
+    },
+    'tools.items': function () { return { abbr: 'Ae', name: '', badge: '', color: '#DC2626', desc: { ar: '', en: '' } }; },
+    'workflow.steps': function () { return { num: '05', title: { ar: '', en: '' }, desc: { ar: '', en: '' } }; },
+    'contact.socials': function () { return { icon: 'instagram', label: '', url: '' }; }
+  };
+
+  function getList(path) { return getByPath(draft, path); }
+
+  function handleStructural(e) {
+    var btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    var act = btn.getAttribute('data-act');
+    var list = btn.getAttribute('data-list');
+    var idx = parseInt(btn.getAttribute('data-idx'), 10);
+    var arr = getList(list);
+    if (!arr) return;
+
+    if (act === 'add') {
+      arr.push(makers[list](arr.length));
+    } else if (act === 'del') {
+      if (!confirm('متأكد إنك عايز تحذف العنصر ده؟')) return;
+      arr.splice(idx, 1);
+    } else if (act === 'up' && idx > 0) {
+      var a = arr[idx - 1]; arr[idx - 1] = arr[idx]; arr[idx] = a;
+    } else if (act === 'down' && idx < arr.length - 1) {
+      var b = arr[idx + 1]; arr[idx + 1] = arr[idx]; arr[idx] = b;
+    }
+    render();
+  }
+
+  /* ------------------------- تنزيل الملف ------------------------- */
+  var HEADER = '/* ============================================================\n'
+    + '   ملف محتوى الموقع — SITE (تم توليده من لوحة التحكم admin.html)\n'
+    + '   عدّل من لوحة التحكم، أو عدّل الملف يدوياً واحفظه في مجلد js\n'
+    + '   ============================================================ */\n\n';
+
+  function save() {
+    collect();
+    var js = HEADER + 'const SITE = ' + JSON.stringify(draft, null, 2) + ';\n';
+    var blob = new Blob([js], { type: 'text/javascript;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'content.js';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    toast('اتنزل ملف content.js — انقله للمجلد js واستبدل القديم', 'ok');
+  }
+
+  function importFile(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var text = String(reader.result);
+        var got = new Function(text + '\n;return SITE;')();
+        if (!got || !got.meta || !got.work) throw new Error('bad shape');
+        draft = got;
+        render();
+        toast('تم الاستيراد بنجاح', 'ok');
+      } catch (err) {
+        toast('الملف مش صالح: ' + err.message, 'err');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  /* ------------------------- التشغيل ------------------------- */
+  document.addEventListener('DOMContentLoaded', function () {
+    render();
+
+    $('#saveBtn').addEventListener('click', save);
+    $('#resetBtn').addEventListener('click', function () { if (confirm('هترجع لكل التعديلات غير المحفوظة. متأكد؟')) location.reload(); });
+    $('#importFile').addEventListener('change', function (e) {
+      if (e.target.files && e.target.files[0]) importFile(e.target.files[0]);
+      e.target.value = '';
+    });
+    $('#adminForm').addEventListener('click', handleStructural);
+  });
+})();
+</script>
+</body>
+</html>

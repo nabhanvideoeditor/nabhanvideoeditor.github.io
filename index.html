@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090B">
+  <title>Nabhan | Video Editor</title>
+  <meta name="description" content="Mohamed Nabhan — Video Editor & Motion Designer: viral short-form reels, documentary storytelling, custom HUD overlays, and precision sound design.">
+
+  <!-- معاينة اللينك لما يتشارك -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="نبهان | Video Editor">
+  <meta property="og:description" content="محمد نبهان — مونتير فيديو ومصمم موشن جرافيك: ريلز، وثائقيات، جرافيك HUD، وهندسة صوتية.">
+  <meta property="og:image" content="assets/img/hero-poster.svg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts: Syne / Plus Jakarta Sans / JetBrains Mono (EN) + Cairo / Tajawal (AR) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <noscript><style>.loader{display:none}</style></noscript>
+</head>
+<body>
+
+  <!-- شاشة البداية -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-clap"></div>
+    <div class="loader-title">NABHAN &bull; VIDEO EDITOR</div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <!-- شريط تقدم القراءة -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- طبقات خلفية المونتاج -->
+  <div class="film-edges" aria-hidden="true"><span class="film-edge"></span><span class="film-edge"></span></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <div class="vf-corners" aria-hidden="true"><i class="vc vc-tl"></i><i class="vc vc-tr"></i><i class="vc vc-bl"></i><i class="vc vc-br"></i></div>
+
+  <!-- طبقة حبيبات سينمائية خفيفة -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- الهيدر -->
+  <header id="siteHeader" class="site-header"></header>
+
+  <!-- المحتوى -->
+  <main id="app"></main>
+
+  <!-- الفوتر -->
+  <footer id="siteFooter" class="site-footer"></footer>
+
+  <!-- المودال (.Lightbox ) -->
+  <div id="modalRoot"></div>
+
+  <noscript>
+    <div style="padding:40px;text-align:center;font-family:sans-serif;color:#FAFAFA;background:#09090B">
+      الموقع ده محتاج JavaScript عشان يشتغل. فعّله في المتصفح من فضلك.
+    </div>
+  </noscript>
+
+  <script src="js/content.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
