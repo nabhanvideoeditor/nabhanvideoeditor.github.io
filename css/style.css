@@ -752,6 +752,29 @@ html[lang="ar"] .hero-title { letter-spacing: 0; line-height: 1.35; }
   .stat { padding: 16px; }
 }
 
+/* -------------------- 11b. تقوية الموبايل -------------------- */
+/* منع أي محتوى من توسيع عمود الشبكة وقص الصفحة أفقياً */
+.contact-grid > *, .work-grid > *, .svc-grid > *, .arsenal-tools > *,
+.wf-grid > *, .stats > *, .about-grid > * { min-width: 0; }
+
+/* كروت التواصل: الإيميل طويل ومش بيتكسر — خليه يلف */
+.channel { flex-wrap: wrap; row-gap: 8px; }
+.channel-main { min-width: 0; flex: 1 1 200px; }
+.channel-value, .channel-label { overflow-wrap: anywhere; word-break: break-word; }
+.channel-icon { flex-shrink: 0; }
+
+/* حقول الفورم ما تخرجش عن الكرت */
+.form-card input, .form-card select, .form-card textarea,
+.form-grid input, .form-grid select, .form-grid textarea { max-width: 100%; min-width: 0; }
+
+@media (max-width: 640px) {
+  .swatch { width: 36px; height: 36px; }
+  .modal-close { width: 44px; height: 44px; }
+  .footer-legal { display: inline-block; padding: 9px 0; margin-inline-start: 0; }
+  .hero-title { font-size: clamp(1.6rem, 7.4vw, 2rem); }
+  .section-title { font-size: clamp(1.4rem, 6vw, 1.7rem); }
+}
+
 /* -------------------- 12. أجواء المونتاج والمؤثرات -------------------- */
 html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3,
 html[lang="ar"] .display, html[lang="ar"] .brand-name,
