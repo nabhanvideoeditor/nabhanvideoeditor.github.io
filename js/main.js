@@ -252,7 +252,6 @@
       +   '<div class="container">'
       +     '<div class="hero-top">'
       +       '<div class="pill reveal is-active"><span class="pill-dot"></span>' + esc(L(S.hero.badge)) + '</div>'
-      +       '<div class="slate reveal is-active"><span class="dot"></span>' + esc(L(S.montage.scene)) + ' <b>01</b> &middot; ' + esc(L(S.montage.take)) + ' <b>01</b> &middot; ' + esc(L(S.montage.roll)) + ' <b>A</b></div>'
       +     '</div>'
       +     '<h1 class="hero-title">' + title + '</h1>'
       +     '<p class="hero-sub reveal is-active">' + esc(L(S.hero.subtitle)) + '</p>'
