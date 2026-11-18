@@ -573,12 +573,43 @@
       var tc = $('#modalTcVal');
       if (v && tc) tc.textContent = fmtTime(v.currentTime);
     });
+
+    /* منع حفظ الفيديو بالزر الأيمن أو السحب */
+    $('#modalStage').addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    $('#modalStage').addEventListener('dragstart', function (e) { e.preventDefault(); });
   }
 
   function fillModalLabels() {
     $('#mbChallengeH').textContent = currentLang === 'ar' ? '01 / التحدي' : '01 / THE CHALLENGE';
     $('#mbH').textContent = currentLang === 'ar' ? '02 / أسلوب التنفيذ' : '02 / EDITING TECHNIQUE';
     $('#mbResultH').textContent = currentLang === 'ar' ? '03 / النتائج' : '03 / IMPACT & RESULTS';
+  }
+
+  /* فيديو بيتحمّل كـ Blob (مش رابط مباشر في الصفحة) ومن غير زرار تحميل */
+  function makeVideo(src, poster) {
+    var v = document.createElement('video');
+    v.setAttribute('controls', '');
+    v.setAttribute('autoplay', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
+    v.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
+    v.setAttribute('disablepictureinpicture', '');
+    v.setAttribute('preload', 'auto');
+    v.setAttribute('crossorigin', 'anonymous');
+    v.poster = poster || '';
+    v.dataset.src = src;
+
+    fetch(src)
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.blob();
+      })
+      .then(function (b) {
+        v.src = URL.createObjectURL(b);
+        v.play().catch(function () {});
+      })
+      .catch(function () { v.src = src; });
+    return v;
   }
 
   var currentProjectId = null;
@@ -656,8 +687,8 @@
       if (c.src && p.isEmbed) {
         stage.innerHTML = '<iframe src="' + esc(c.src) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
       } else if (c.src) {
-        stage.innerHTML = '<video controls autoplay playsinline poster="' + esc(c.poster) + '">'
-          + '<source src="' + esc(c.src) + '" type="video/mp4"></video>';
+        stage.innerHTML = '';
+        stage.appendChild(makeVideo(c.src, c.poster));
       } else {
         stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>'
           + (currentLang === 'ar' ? 'مفيش فيديو مرفوع لهذا المشروع بعد' : 'No video attached to this project yet')
@@ -688,8 +719,8 @@
     if (S.showreel.isEmbed && S.showreel.videoUrl) {
       stage.innerHTML = '<iframe src="' + esc(S.showreel.videoUrl) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
     } else if (S.showreel.videoUrl) {
-      stage.innerHTML = '<video controls autoplay playsinline poster="' + esc(S.showreel.poster || '') + '">'
-        + '<source src="' + esc(S.showreel.videoUrl) + '" type="video/mp4"></video>';
+      stage.innerHTML = '';
+      stage.appendChild(makeVideo(S.showreel.videoUrl, S.showreel.poster || ''));
     } else {
       stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>' + (currentLang === 'ar' ? 'حط رابط الشوريل في ملف content.js' : 'Set your showreel URL in content.js') + '</span></div>';
     }

@@ -24,10 +24,10 @@ const SITE = {
     brand: { ar: "نبهان", en: "NABHAN" },
     owner_ar: "محمد نبهان",
     owner_en: "Mohamed Nabhan",
-    title: { ar: "نبهان | مونتير فيديو", en: "Nabhan | Video Editor" },
+    title: { ar: "نبهان | فيديو إيديتور", en: "Nabhan | Video Editor" },
     description: {
-      ar: "محمد نبهان — مونتير فيديو ومصمم موشن جرافيك: ريلز عالية الانتشار، أفلام وثائقية، جرافيك HUD، وهندسة صوتية احترافية.",
-      en: "Mohamed Nabhan — Video Editor & Motion Designer crafting viral short-form reels, documentary storytelling, custom HUD overlays, and precision sound design."
+      ar: "نبهان — فيديو إيديتور ومصمم موشن جرافيك: ريلز عالية الانتشار، أفلام وثائقية، جرافيك HUD، وهندسة صوتية احترافية.",
+      en: "Nabhan — Video Editor & Motion Designer crafting viral short-form reels, documentary storytelling, custom HUD overlays, and precision sound design."
     },
     defaultLang: "ar",                 // اللغة الافتراضية عند أول زيارة: "ar" أو "en"
     accent: "#DC2626",                 // لون التمييز الأساسي في الموقع
@@ -130,8 +130,8 @@ const SITE = {
     },
     card_watch: { ar: "معاينة المشروع", en: "Watch Breakdown" },
     note: {
-      ar: "ده عرض تجريبي بمشاريع مؤقتة — عدّل المشاريع من صفحة التحكم admin.html أو من ملف content.js",
-      en: "Demo showcase with placeholder projects — edit them from admin.html or content.js"
+      ar: "أعمال مختارة من مشاريع المونتاج — عدّل المشاريع من صفحة التحكم admin.html أو من ملف content.js",
+      en: "A selection of editing projects — edit them from admin.html or content.js"
     },
     showNote: false,
 
