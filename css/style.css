@@ -40,7 +40,7 @@
   --header-h: 74px;
 }
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: calc(var(--header-h) + 24px); }
 
 body {
   margin: 0;
@@ -756,6 +756,9 @@ html[lang="ar"] .hero-title { letter-spacing: 0; line-height: 1.35; }
 /* منع أي محتوى من توسيع عمود الشبكة وقص الصفحة أفقياً */
 .contact-grid > *, .work-grid > *, .svc-grid > *, .arsenal-tools > *,
 .wf-grid > *, .stats > *, .about-grid > * { min-width: 0; }
+
+/* الهدر الثابت ما يغطاش عنوان القسم لما نضغط على القايمة */
+section[id], #siteFooter { scroll-margin-top: calc(var(--header-h) + 20px); }
 
 /* كروت التواصل: الإيميل طويل ومش بيتكسر — خليه يلف */
 .channel { flex-wrap: wrap; row-gap: 8px; }
