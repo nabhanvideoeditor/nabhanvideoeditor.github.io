@@ -687,8 +687,14 @@
       if (c.src && p.isEmbed) {
         stage.innerHTML = '<iframe src="' + esc(c.src) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
       } else if (c.src) {
-        stage.innerHTML = '';
-        stage.appendChild(makeVideo(c.src, c.poster));
+        stage.innerHTML = '<div class="modal-loading"><span class="spinner"></span>'
+          + '<span>' + (currentLang === 'ar' ? 'بيتم تحميل الفيديو…' : 'Loading video…') + '</span></div>';
+        var v = makeVideo(c.src, c.poster);
+        v.addEventListener('loadeddata', function () {
+          var l = stage.querySelector('.modal-loading');
+          if (l) l.remove();
+        });
+        stage.appendChild(v);
       } else {
         stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>'
           + (currentLang === 'ar' ? 'مفيش فيديو مرفوع لهذا المشروع بعد' : 'No video attached to this project yet')
@@ -719,8 +725,14 @@
     if (S.showreel.isEmbed && S.showreel.videoUrl) {
       stage.innerHTML = '<iframe src="' + esc(S.showreel.videoUrl) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
     } else if (S.showreel.videoUrl) {
-      stage.innerHTML = '';
-      stage.appendChild(makeVideo(S.showreel.videoUrl, S.showreel.poster || ''));
+      stage.innerHTML = '<div class="modal-loading"><span class="spinner"></span>'
+        + '<span>' + (currentLang === 'ar' ? 'بيتم تحميل الفيديو…' : 'Loading video…') + '</span></div>';
+      var sv = makeVideo(S.showreel.videoUrl, S.showreel.poster || '');
+      sv.addEventListener('loadeddata', function () {
+        var l = stage.querySelector('.modal-loading');
+        if (l) l.remove();
+      });
+      stage.appendChild(sv);
     } else {
       stage.innerHTML = '<div class="modal-empty">' + icon('video') + '<span>' + (currentLang === 'ar' ? 'حط رابط الشوريل في ملف content.js' : 'Set your showreel URL in content.js') + '</span></div>';
     }

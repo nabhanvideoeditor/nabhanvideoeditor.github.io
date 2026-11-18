@@ -659,7 +659,17 @@ html[lang="ar"] .hero-title { letter-spacing: 0; line-height: 1.35; }
 }
 .modal-close:hover { background: var(--accent); border-color: var(--accent); }
 .modal-close svg { width: 16px; height: 16px; }
-.modal-stage { background: #000; aspect-ratio: 16 / 9; }
+.modal-stage { background: #000; aspect-ratio: 16 / 9; position: relative; overflow: hidden; }
+.modal-loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px;
+  color: var(--muted); font-family: var(--font-mono); font-size: .8rem; letter-spacing: .4px;
+}
+.modal-loading .spinner {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.22); border-top-color: var(--accent);
+  animation: wm-spin .8s linear infinite;
+}
+@keyframes wm-spin { to { transform: rotate(360deg); } }
 .modal-stage video, .modal-stage iframe { width: 100%; height: 100%; border: 0; object-fit: contain; background: #000; }
 .modal-stage--vertical { aspect-ratio: 9 / 16; max-height: 62vh; margin-inline: auto; }
 .modal-tag { display: block; font-size: .78rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
