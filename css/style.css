@@ -228,18 +228,18 @@ input, textarea, select { font: inherit; }
 .brand:hover .brand-logo-wrap { transform: translateY(-2px) scale(1.06); }
 .brand-logo-anim { position: absolute; inset: 0; display: block; animation: logo-breathe 4.4s ease-in-out infinite; }
 .logo-layer { position: absolute; inset: 0; display: block; }
-.logo-base { background: url("../assets/img/logo-base.png") center / contain no-repeat; }
+.logo-base { background: url("../assets/img/logo-base.png?v=3") center / contain no-repeat; }
 .logo-letters {
-  background: url("../assets/img/logo-letters-cinema.png") center / contain no-repeat;
+  background: url("../assets/img/logo-letters-cinema.png?v=3") center / contain no-repeat;
 }
-html[data-theme="studio"]    .logo-letters { background-image: url("../assets/img/logo-letters-studio.png"); }
-html[data-theme="midnight"]  .logo-letters { background-image: url("../assets/img/logo-letters-midnight.png"); }
-html[data-theme="emerald"]   .logo-letters { background-image: url("../assets/img/logo-letters-emerald.png"); }
-html[data-theme="royal"]     .logo-letters { background-image: url("../assets/img/logo-letters-royal.png"); }
-html[data-theme="editorial"] .logo-letters { background-image: url("../assets/img/logo-letters-editorial.png"); }
+html[data-theme="studio"]    .logo-letters { background-image: url("../assets/img/logo-letters-studio.png?v=3"); }
+html[data-theme="midnight"]  .logo-letters { background-image: url("../assets/img/logo-letters-midnight.png?v=3"); }
+html[data-theme="emerald"]   .logo-letters { background-image: url("../assets/img/logo-letters-emerald.png?v=3"); }
+html[data-theme="royal"]     .logo-letters { background-image: url("../assets/img/logo-letters-royal.png?v=3"); }
+html[data-theme="editorial"] .logo-letters { background-image: url("../assets/img/logo-letters-editorial.png?v=3"); }
 .brand-logo-shine {
   position: absolute; inset: 0; pointer-events: none;
-  background: url("../assets/img/logo-shine.png") center / contain no-repeat;
+  background: url("../assets/img/logo-shine.png?v=3") center / contain no-repeat;
   mix-blend-mode: screen;
   opacity: 0;
   animation: logo-shine 4.4s ease-in-out infinite;
@@ -972,14 +972,6 @@ html[lang="ar"] .form-success h3 { font-weight: 500; }
 html[dir="rtl"] .cut-flash { transform: translateX(110%); }
 html[dir="rtl"] .cut-flash.go { transform: translateX(-110%); }
 
-/* لافتة المشهد */
-.scene-tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: .58rem; font-weight: 700; letter-spacing: .24em;
-  color: var(--muted); border: 1px solid var(--line); border-radius: 6px;
-  padding: 4px 8px; margin-inline-end: 12px; transform: translateY(-1px);
-}
-.scene-tag i { width: 6px; height: 6px; background: var(--accent); display: inline-block; }
 
 /* شريحة الكاميرا */
 .tool-chip.cam { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
