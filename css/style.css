@@ -228,18 +228,18 @@ input, textarea, select { font: inherit; }
 .brand:hover .brand-logo-wrap { transform: translateY(-2px) scale(1.06); }
 .brand-logo-anim { position: absolute; inset: 0; display: block; animation: logo-breathe 4.4s ease-in-out infinite; }
 .logo-layer { position: absolute; inset: 0; display: block; }
-.logo-base { background: url("../assets/img/logo-base.png?v=7") center / contain no-repeat; }
+.logo-base { background: url("../assets/img/logo-base.png?v=8") center / contain no-repeat; }
 .logo-letters {
-  background: url("../assets/img/logo-letters-cinema.png?v=7") center / contain no-repeat;
+  background: url("../assets/img/logo-letters-cinema.png?v=8") center / contain no-repeat;
 }
-html[data-theme="studio"]    .logo-letters { background-image: url("../assets/img/logo-letters-studio.png?v=7"); }
-html[data-theme="midnight"]  .logo-letters { background-image: url("../assets/img/logo-letters-midnight.png?v=7"); }
-html[data-theme="emerald"]   .logo-letters { background-image: url("../assets/img/logo-letters-emerald.png?v=7"); }
-html[data-theme="royal"]     .logo-letters { background-image: url("../assets/img/logo-letters-royal.png?v=7"); }
-html[data-theme="editorial"] .logo-letters { background-image: url("../assets/img/logo-letters-editorial.png?v=7"); }
+html[data-theme="studio"]    .logo-letters { background-image: url("../assets/img/logo-letters-studio.png?v=8"); }
+html[data-theme="midnight"]  .logo-letters { background-image: url("../assets/img/logo-letters-midnight.png?v=8"); }
+html[data-theme="emerald"]   .logo-letters { background-image: url("../assets/img/logo-letters-emerald.png?v=8"); }
+html[data-theme="royal"]     .logo-letters { background-image: url("../assets/img/logo-letters-royal.png?v=8"); }
+html[data-theme="editorial"] .logo-letters { background-image: url("../assets/img/logo-letters-editorial.png?v=8"); }
 .brand-logo-shine {
   position: absolute; inset: 0; pointer-events: none;
-  background: url("../assets/img/logo-shine.png?v=7") center / contain no-repeat;
+  background: url("../assets/img/logo-shine.png?v=8") center / contain no-repeat;
   mix-blend-mode: screen;
   opacity: 0;
   animation: logo-shine 4.4s ease-in-out infinite;
