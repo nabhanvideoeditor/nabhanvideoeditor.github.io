@@ -397,7 +397,7 @@ const SITE = {
 
     socials_label: { ar: "تابع أرشيف الأعمال", en: "FOLLOW THE ARCHIVE" },
     socials: [
-      { icon: "instagram", label: "Instagram", url: "https://instagram.com/" },
+      { icon: "instagram", label: "Instagram", url: "https://instagram.com/nabhan.editing" },
       { icon: "tiktok",    label: "TikTok",    url: "https://tiktok.com/" },
       { icon: "youtube",   label: "YouTube",   url: "https://youtube.com/" },
       { icon: "facebook",  label: "Facebook",  url: "https://facebook.com/" }
