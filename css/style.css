@@ -224,7 +224,7 @@ input, textarea, select { font: inherit; }
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand-logo-wrap { position: relative; display: block; width: 42px; height: 42px; flex-shrink: 0; animation: logo-glow 4.4s ease-in-out infinite; }
+.brand-logo-wrap { position: relative; display: block; width: 42px; height: 42px; flex-shrink: 0; animation: logo-glow 4.4s ease-in-out infinite, logo-breathe 4.4s ease-in-out infinite; }
 .brand-logo { width: 42px; height: 42px; border-radius: 12px; display: block; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
 .brand:hover .brand-logo { transform: translateY(-2px) scale(1.07); }
 .brand-logo-shine {
@@ -249,6 +249,7 @@ input, textarea, select { font: inherit; }
   0%, 100% { filter: drop-shadow(0 0 0 color-mix(in srgb, var(--accent) 0%, transparent)); }
   50% { filter: drop-shadow(0 0 9px color-mix(in srgb, var(--accent) 55%, transparent)); }
 }
+@keyframes logo-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.06em; }
 html[lang="ar"] .brand-name { font-family: var(--font-body); letter-spacing: 0; }
