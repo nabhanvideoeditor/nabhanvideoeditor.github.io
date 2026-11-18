@@ -670,6 +670,26 @@ html[lang="ar"] .hero-title { letter-spacing: 0; line-height: 1.35; }
   animation: wm-spin .8s linear infinite;
 }
 @keyframes wm-spin { to { transform: rotate(360deg); } }
+.about-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; }
+.about-p { color: var(--muted); line-height: 2; margin: 0 0 16px; font-size: .98rem; }
+.about-points { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; }
+.about-points li { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; color: var(--text); }
+.about-points svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; margin-top: 3px; }
+.footer-legal { color: rgba(255,255,255,.45); text-decoration: none; font-size: .82rem; margin-inline-start: 12px; transition: color .2s; }
+.footer-legal:hover { color: var(--accent); }
+.ad-wrap { padding-block: 20px; }
+.ad-slot {
+  min-height: 90px; display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.02); border: 1px dashed rgba(255,255,255,.1);
+  border-radius: 12px; position: relative;
+}
+.ad-slot--rect { min-height: 250px; }
+.ad-label {
+  position: absolute; top: -9px; inset-inline-start: 14px; padding: 1px 8px;
+  background: #0B0B0D; color: rgba(255,255,255,.4);
+  font-family: var(--font-mono); font-size: .62rem; letter-spacing: 1.2px; text-transform: uppercase;
+}
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 26px; } }
 .modal-stage video, .modal-stage iframe { width: 100%; height: 100%; border: 0; object-fit: contain; background: #000; }
 .modal-stage--vertical { aspect-ratio: 9 / 16; max-height: 62vh; margin-inline: auto; }
 .modal-tag { display: block; font-size: .78rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

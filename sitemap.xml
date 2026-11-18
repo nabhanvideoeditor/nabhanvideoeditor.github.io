@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  قبل الرفع: استبدل YOUR-DOMAIN-HERE بالرابط النهائي للموقع
-  مثال: https://nabhan.github.io أو https://nabhan.github.io/nabhan
+  خريطة الموقع — الرابط النهائي: https://nabhanvideoeditor.github.io/
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nabhanvideoeditor.github.io/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nabhanvideoeditor.github.io/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
 </urlset>

@@ -64,6 +64,7 @@ const SITE = {
     work:      { ar: "أعمالي",              en: "Work" },
     services:  { ar: "الخدمات",             en: "Services" },
     arsenal:   { ar: "الأدوات وآلية العمل", en: "Workflow & Gear" },
+    about:     { ar: "نبذة",                en: "About" },
     contact:   { ar: "تواصل معي",           en: "Contact" },
     cta:       { ar: "احجز مشروعك",         en: "Book an Edit" }
   },
@@ -349,6 +350,35 @@ const SITE = {
   },
 
   /* ------------------------------------------------------------------
+     نبذة عن نبهان
+     ------------------------------------------------------------------ */
+  about: {
+    eyebrow: { ar: "// نبذة", en: "// ABOUT" },
+    title:   { ar: "مونتير بيشتغل كأنه شريك في مشروعك", en: "An editor who treats your project like his own" },
+    subtitle: {
+      ar: "مش بس بقص لقطات — ببني إيقاع بصري خلاصته إن المشاهد يكمّل للآخر.",
+      en: "I don’t just cut clips — I build a visual rhythm whose payoff is that viewers stay until the end."
+    },
+    bio: [
+      {
+        ar: "أنا نبهان — مونتير فيديو ومصمم موشن جرافيك. شغلي بيبدأ من اللقطات الخام وبيوصل لفيديو جاهز للنشر، قرارات القص فيه مبنية على الإيقاع والمؤثر الصوتي مش على «الشكل» بس.",
+        en: "I’m Nabhan — a video editor & motion graphics designer. My work starts from raw footage and ends with a publish-ready video, where every cut is driven by rhythm and sound rather than looks alone."
+      },
+      {
+        ar: "تعاملت مع براندات ملابس، عيادات، وصناع محتوى — وكل مشروع بيبدأ بفهم الجمهور قبل فتح خط الزمن.",
+        en: "I’ve worked with fashion brands, clinics, and content creators — and every project starts with understanding the audience before opening the timeline."
+      }
+    ],
+    points: [
+      { ar: "متخصص في الريلز عالية الاحتفاظ بالمشاهد", en: "Short-form built for retention" },
+      { ar: "إعلانات براند: أزياء، قطاع طبي، ومتاجر رياضية", en: "Brand campaigns across fashion, healthcare & sportswear" },
+      { ar: "نسخة أولى سريعة وتسليم منضبط بالمواعيد", en: "Fast first cut, reliable deadlines" },
+      { ar: "تواصل مباشر على واتساب طوال مدة التنفيذ", en: "Direct WhatsApp line throughout the project" }
+    ],
+    cta: { ar: "ابدأ مشروعك", en: "Start Your Project" }
+  },
+
+  /* ------------------------------------------------------------------
      التواصل
      ------------------------------------------------------------------ */
   contact: {
@@ -400,5 +430,30 @@ const SITE = {
   footer: {
     copy: { ar: "© 2026 محمد نبهان. جميع الحقوق محفوظة.", en: "© 2026 Mohamed Nabhan. All Rights Reserved." },
     tag:  { ar: "مصمم لصناعة محتوى بصري عالي التأثير", en: "CRAFTED FOR HIGH-RETENTION STORYTELLING" }
+  },
+
+  /* ------------------------------------------------------------------
+     صفحات الموقع الرسمية
+     ------------------------------------------------------------------ */
+  legal: {
+    privacy: "privacy.html",
+    privacy_label: { ar: "سياسة الخصوصية", en: "Privacy Policy" },
+    terms_label:   { ar: "الشروط والأحكام", en: "Terms of Service" }
+  },
+
+  /* ------------------------------------------------------------------
+     الإعلانات — عشان تكسب من الزيارات
+     ------------------------------------------------------------------
+     فعّلها لما يجيك موافقة Google AdSense:
+     1) enabled: true
+     2) client: "ca-pub-XXXXXXXXXXXXXXXX"  (من كود AdSense بتاعك)
+     3) slots: رقم الـ data-ad-slot لكل مساحة من لوحة AdSense
+     لحد ما تفعلها، المكان فلااض ومش بيظهر حاجة.
+     ------------------------------------------------------------------ */
+  ads: {
+    enabled: false,
+    client: "",
+    slots: { leaderboard: "", infeed: "" },
+    label: { ar: "إعلان", en: "Advertisement" }
   }
 };

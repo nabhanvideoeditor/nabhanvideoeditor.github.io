@@ -154,6 +154,7 @@
       { href: '#work', label: L(S.nav.work) },
       { href: '#services', label: L(S.nav.services) },
       { href: '#arsenal', label: L(S.nav.arsenal) },
+      { href: '#about', label: L(S.nav.about) },
       { href: '#contact', label: L(S.nav.contact) }
     ];
 
@@ -457,6 +458,31 @@
       + '</section>';
   }
 
+  /* ------------------------- نبذة ------------------------- */
+  function renderAbout() {
+    var a = S.about;
+    if (!a) return '';
+    var bio = (a.bio || []).map(function (p) { return '<p class="about-p">' + esc(L(p)) + '</p>'; }).join('');
+    var points = (a.points || []).map(function (p) {
+      return '<li>' + icon('check') + '<span>' + esc(L(p)) + '</span></li>';
+    }).join('');
+    return ''
+      + '<section class="section section--surface" id="about">'
+      +   '<div class="container about-grid">'
+      +     '<div class="reveal">'
+      +       '<p class="eyebrow"><span class="scene-tag"><i></i>SCENE 05</span>' + esc(L(a.eyebrow)) + '</p>'
+      +       '<h2 class="section-title">' + esc(L(a.title)) + '</h2>'
+      +       '<p class="section-sub">' + esc(L(a.subtitle)) + '</p>'
+      +       '<a href="#contact" class="btn btn-primary">' + esc(L(a.cta)) + '</a>'
+      +     '</div>'
+      +     '<div class="reveal-zoom">'
+      +       bio
+      +       '<ul class="about-points">' + points + '</ul>'
+      +     '</div>'
+      +   '</div>'
+      + '</section>';
+  }
+
   /* ------------------------- التواصل ------------------------- */
   function renderContact() {
     var f = S.contact.form;
@@ -473,7 +499,7 @@
       +   '<div class="contact-wave" aria-hidden="true">' + waveformBars(44) + '</div>'
       +   '<div class="container">'
       +     '<div class="section-head reveal">'
-      +       '<p class="eyebrow"><span class="scene-tag"><i></i>SCENE 05</span>' + esc(L(S.contact.eyebrow)) + '</p>'
+      +       '<p class="eyebrow"><span class="scene-tag"><i></i>SCENE 06</span>' + esc(L(S.contact.eyebrow)) + '</p>'
       +       '<h2 class="section-title">' + esc(L(S.contact.title)) + '</h2>'
       +       '<p class="section-sub">' + esc(L(S.contact.subtitle)) + '</p>'
       +     '</div>'
@@ -533,10 +559,13 @@
   /* ------------------------- الفوتر ------------------------- */
   function renderFooter() {
     var brand = L(S.meta.brand) || S.meta.brand;
+    var legal = (S.legal && S.legal.privacy)
+      ? '<a class="footer-legal" href="' + esc(S.legal.privacy) + '">' + esc(L(S.legal.privacy_label)) + '</a>'
+      : '';
     $('#siteFooter').innerHTML = ''
       + '<div class="container footer-inner">'
       +   '<div class="footer-brand">' + esc(brand) + '<span style="color:rgba(255,255,255,.2)">|</span>'
-      +     '<span class="footer-copy">' + esc(L(S.footer.copy)) + '</span></div>'
+      +     '<span class="footer-copy">' + esc(L(S.footer.copy)) + '</span>' + legal + '</div>'
       +   '<div class="footer-tag">' + esc(L(S.footer.tag)) + '</div>'
       + '</div>';
   }
@@ -949,17 +978,56 @@
     });
   }
 
+    /* ------------------------- الإعلانات ------------------------- */
+  function adSlotHtml(key) {
+    var cls = key === 'infeed' ? 'ad-slot ad-slot--rect' : 'ad-slot ad-slot--leader';
+    return '<div class="container ad-wrap"><div class="' + cls + '" data-ad="' + key + '"></div></div>';
+  }
+
+  function loadAdScript() {
+    if (!S.ads || !S.ads.client) return;
+    if (document.getElementById('adsense-script')) return;
+    var s = document.createElement('script');
+    s.id = 'adsense-script';
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(S.ads.client);
+    document.head.appendChild(s);
+  }
+
+  function initAds() {
+    var cfg = S.ads;
+    if (!cfg || !cfg.enabled || !cfg.client) return;
+    loadAdScript();
+    $$('.ad-slot').forEach(function (slot) {
+      var key = slot.dataset.ad;
+      var sid = (cfg.slots || {})[key];
+      if (!sid) { slot.remove(); return; }
+      slot.innerHTML = '<span class="ad-label">' + esc(L(cfg.label)) + '</span>'
+        + '<ins class="adsbygoogle" style="display:block"'
+        + ' data-ad-client="' + esc(cfg.client) + '"'
+        + ' data-ad-slot="' + esc(sid) + '"'
+        + ' data-ad-format="' + (key === 'infeed' ? 'fluid' : 'auto') + '"'
+        + (key === 'infeed' ? ' data-ad-layout-key="-fb+5w+4e-db+86"' : '')
+        + ' data-full-width-responsive="true"></ins>';
+      try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    });
+  }
+
   /* ------------------------- العرض العام ------------------------- */
   function renderAll() {
     var app = $('#app');
     app.innerHTML = renderHero()
       + renderMarquee()
+      + (S.ads && S.ads.enabled ? adSlotHtml('leaderboard') : '')
       + renderWork()
       + '<div class="film-strip" aria-hidden="true"></div>'
       + renderServices()
       + '<div class="film-strip" aria-hidden="true"></div>'
       + renderArsenal()
       + '<div class="edit-timeline-band">' + renderEditTimeline() + '</div>'
+      + renderAbout()
+      + (S.ads && S.ads.enabled ? adSlotHtml('infeed') : '')
       + renderContact();
 
     renderHeader();
@@ -981,6 +1049,7 @@
     initSpotlight();
     initHoverSounds();
     bindPalette();
+    initAds();
   }
 
   /* ------------------------- مؤشر ماوس مخصص ------------------------- */
