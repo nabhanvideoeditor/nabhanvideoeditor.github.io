@@ -162,8 +162,11 @@
       + '<div class="header-inner">'
       +   '<a class="brand" href="#top" aria-label="' + esc(brand) + '">'
       +     '<span class="brand-logo-wrap">'
-      +       '<img class="brand-logo" src="assets/img/logo-badge.png" alt="' + esc(brand) + ' logo" width="42" height="42">'
-      +       '<span class="brand-logo-shine" aria-hidden="true"></span>'
+      +       '<span class="brand-logo-anim">'
+      +         '<span class="logo-layer logo-base" aria-hidden="true"></span>'
+      +         '<span class="logo-layer logo-letters" aria-hidden="true"></span>'
+      +         '<span class="brand-logo-shine" aria-hidden="true"></span>'
+      +       '</span>'
       +     '</span>'
       +     '<span class="brand-text">'
       +       '<span class="brand-name">' + esc(brand) + '</span>'
@@ -1283,8 +1286,12 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.documentElement.style.setProperty('--accent', S.meta.accent || '#DC2626');
-    document.documentElement.style.setProperty('--accent-dark', S.meta.accentDark || '#991B1B');
+    /* الأكسسنت الافتراضي من content.js — بيتحط في :root عشان الستايلات
+       (html[data-theme="..."]) تفضل فوقه، والألون المحفوظة تفضل فوق الكل */
+    var st = document.createElement('style');
+    st.textContent = ':root{--accent:' + (S.meta.accent || '#DC2626')
+      + ';--accent-dark:' + (S.meta.accentDark || '#991B1B') + '}';
+    document.head.appendChild(st);
     applyPalette(savedPalette());
     renderAll();
     bindGlobalSounds();
