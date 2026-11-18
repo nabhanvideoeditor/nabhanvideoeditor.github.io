@@ -22,8 +22,8 @@ const SITE = {
      ------------------------------------------------------------------ */
   meta: {
     brand: { ar: "نبهان", en: "NABHAN" },
-    owner_ar: "محمد نبهان",
-    owner_en: "Mohamed Nabhan",
+    owner_ar: "نبهان",
+    owner_en: "Nabhan",
     title: { ar: "نبهان | فيديو إيديتور", en: "Nabhan | Video Editor" },
     description: {
       ar: "نبهان — فيديو إيديتور ومصمم موشن جرافيك: ريلز عالية الانتشار، أفلام وثائقية، جرافيك HUD، وهندسة صوتية احترافية.",
@@ -86,8 +86,8 @@ const SITE = {
       en: "High-Retention Visual Stories."
     },
     subtitle: {
-      ar: "أنا محمد نبهان — مونتير ومصمم موشن جرافيك متخصص في صناعة فيديوهات الريلز عالية الانتشار، الأفلام الوثائقية، جرافيك HUD، والهندسة الصوتية الاحترافية عبر After Effects و Premiere Pro.",
-      en: "I’m Mohamed Nabhan — a Video Editor & Motion Graphics Designer crafting viral short-form Reels, documentary storytelling, custom HUD/AR overlays, and precision sound design in After Effects & Premiere Pro."
+      ar: "أنا نبهان — مونتير ومصمم موشن جرافيك متخصص في صناعة فيديوهات الريلز عالية الانتشار، الأفلام الوثائقية، جرافيك HUD، والهندسة الصوتية الاحترافية عبر After Effects و Premiere Pro.",
+      en: "I’m Nabhan — a Video Editor & Motion Graphics Designer crafting viral short-form Reels, documentary storytelling, custom HUD/AR overlays, and precision sound design in After Effects & Premiere Pro."
     },
     btn_reel: { ar: "شاهد الشوريل", en: "Watch Showreel" },
     btn_work: { ar: "استكشف الأعمال المختارة", en: "Explore Selected Cuts" },
@@ -411,8 +411,8 @@ const SITE = {
       msg_label:   { ar: "تفاصيل المشروع وموعد التسليم المتوقع *", en: "Project Brief & Deadline *" },
       submit:      { ar: "إرسال تفاصيل المشروع", en: "Send Project Brief" },
       ok_title:    { ar: "تم استلام طلبك بنجاح!", en: "Brief Received!" },
-      ok_desc:     { ar: "شكراً لتواصلك مع نبهان. سيقوم محمد نبهان بمراجعة تفاصيل مشروعك والرد عليك خلال 24 ساعة.",
-                     en: "Thanks for reaching out. Mohamed Nabhan will review your project details and reply within 24 hours." },
+      ok_desc:     { ar: "شكراً لتواصلك مع نبهان. سيقوم نبهان بمراجعة تفاصيل مشروعك والرد عليك خلال 24 ساعة.",
+                     en: "Thanks for reaching out. Nabhan will review your project details and reply within 24 hours." },
       reset:       { ar: "إرسال مشروع آخر", en: "Send Another Brief" },
       // الاختيارات اللي هتظهر في قائمة "نوع المشروع"
       types: [
@@ -428,7 +428,7 @@ const SITE = {
      الفوتر
      ------------------------------------------------------------------ */
   footer: {
-    copy: { ar: "© 2026 محمد نبهان. جميع الحقوق محفوظة.", en: "© 2026 Mohamed Nabhan. All Rights Reserved." },
+    copy: { ar: "© 2026 نبهان. جميع الحقوق محفوظة.", en: "© 2026 Nabhan. All Rights Reserved." },
     tag:  { ar: "مصمم لصناعة محتوى بصري عالي التأثير", en: "CRAFTED FOR HIGH-RETENTION STORYTELLING" }
   },
 

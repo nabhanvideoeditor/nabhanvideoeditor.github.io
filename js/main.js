@@ -170,7 +170,7 @@
       +     '</span>'
       +     '<span class="brand-text">'
       +       '<span class="brand-name">' + esc(brand) + '</span>'
-      +       '<span class="brand-sub">' + esc(owner) + '</span>'
+      +       (owner && owner !== brand ? '<span class="brand-sub">' + esc(owner) + '</span>' : '')
       +     '</span>'
       +   '</a>'
       +   '<nav class="main-nav" aria-label="Main">'
