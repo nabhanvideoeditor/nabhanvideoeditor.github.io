@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09090B">
+  <script>
+    /* تطبيق الستايل المختار قبل أول رسم للصفحة عشان مفيش وميض */
+    (function () {
+      try {
+        var t = localStorage.getItem('nabhan-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
   <title>نبهان | فيديو إيديتور</title>
   <meta name="description" content="نبهان — فيديو إيديتور ومصمم موشن جرافيك: ريلز عالية الانتشار، أفلام وثائقية، جرافيك HUD، وهندسة صوتية احترافية.">
 

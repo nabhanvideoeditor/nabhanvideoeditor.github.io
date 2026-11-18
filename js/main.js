@@ -177,7 +177,7 @@
       +     '</button>'
       +     '<button class="sound-toggle" id="soundToggle" type="button" aria-label="Sound effects" aria-pressed="' + (soundOn ? 'true' : 'false') + '">'
       +       icon(soundOn ? 'volume' : 'volumeOff') + '</button>'
-      +     '<button class="palette-btn" id="paletteBtn" type="button" aria-label="Change colour">' + icon('palette') + '</button>'
+      +     '<button class="palette-btn" id="paletteBtn" type="button" aria-label="Site style / ستايل الموقع">' + icon('palette') + '</button>'
       +     '<div class="palette-pop" id="palettePop"></div>'
       +     '<a href="#contact" class="btn btn-primary btn-sm header-cta">' + esc(L(S.nav.cta)) + '</a>'
       +     '<button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">' + icon('menu') + '</button>'
@@ -812,6 +812,8 @@
     if ($('#videoModal') && $('#videoModal').classList.contains('is-open') && currentProjectId) {
       openProjectModal(currentProjectId);
     }
+    /* لغة لوحة الستايل كمان */
+    buildStylePop();
   }
 
   /* ------------------------- التواصل والفورم ------------------------- */
@@ -1153,7 +1155,7 @@
     return out;
   }
 
-  /* ------------------------- ألوان الموقع ------------------------- */
+  /* ------------------------- ستايلات وألوان الموقع ------------------------- */
   var PALETTES = [
     { id: 'crimson', ar: 'قرمزي',  en: 'Crimson', accent: '#DC2626', dark: '#991B1B' },
     { id: 'rose',    ar: 'وردي',   en: 'Rose',    accent: '#F43F5E', dark: '#BE123C' },
@@ -1162,6 +1164,41 @@
     { id: 'sky',     ar: 'سماوي',  en: 'Sky',     accent: '#0EA5E9', dark: '#0369A1' },
     { id: 'violet',  ar: 'بنفسجي', en: 'Violet',  accent: '#8B5CF6', dark: '#6D28D9' }
   ];
+
+  /* الستايلات الكاملة: كل واحد بيغيّر منظومة الألوان كلها */
+  var THEMES = [
+    { id: 'cinema',    ar: 'سينمائي',     en: 'Cinema',   bg: '#09090B', surface: '#121215', text: '#FAFAFA', accent: '#DC2626' },
+    { id: 'studio',    ar: 'استوديو فاتح', en: 'Studio',   bg: '#F4F4F1', surface: '#FFFFFF', text: '#131316', accent: '#E11D48' },
+    { id: 'midnight',  ar: 'منتصف الليل', en: 'Midnight', bg: '#080F1E', surface: '#0E1729', text: '#EEF2FF', accent: '#3B82F6' },
+    { id: 'emerald',   ar: 'زمردي',       en: 'Emerald',  bg: '#06120D', surface: '#0B1D15', text: '#ECFDF5', accent: '#10B981' },
+    { id: 'royal',     ar: 'بنفسجي ملكي',  en: 'Royal',    bg: '#0E0919', surface: '#170F28', text: '#F5F3FF', accent: '#8B5CF6' },
+    { id: 'editorial', ar: 'ورقي تحريري',  en: 'Editorial',bg: '#F3EEE2', surface: '#FBF8EF', text: '#1C1917', accent: '#B45309' }
+  ];
+
+  function savedTheme() {
+    var id = null;
+    try { id = localStorage.getItem('nabhan-theme'); } catch (e) {}
+    return THEMES.find(function (t) { return t.id === id; }) || THEMES[0];
+  }
+
+  function setTheme(id) {
+    var t = THEMES.find(function (x) { return x.id === id; }) || THEMES[0];
+    document.documentElement.setAttribute('data-theme', t.id);
+    paintThemes();
+  }
+
+  function paintThemes() {
+    var cur = document.documentElement.getAttribute('data-theme') || 'cinema';
+    $$('.theme-card').forEach(function (c) { c.classList.toggle('is-active', c.dataset.id === cur); });
+  }
+
+  function clearAccent() {
+    var st = document.documentElement.style;
+    st.removeProperty('--accent');
+    st.removeProperty('--accent-dark');
+    try { localStorage.removeItem('nabhan-accent'); } catch (e) {}
+    $$('.swatch').forEach(function (s) { s.classList.remove('is-active'); });
+  }
 
   function applyPalette(p) {
     if (!p) return;
@@ -1174,28 +1211,66 @@
   function savedPalette() {
     var id = null;
     try { id = localStorage.getItem('nabhan-accent'); } catch (e) {}
-    return PALETTES.find(function (p) { return p.id === id; }) || PALETTES[0];
+    return PALETTES.find(function (p) { return p.id === id; }) || null;
+  }
+
+  function buildStylePop() {
+    var pop = $('#palettePop');
+    if (!pop) return;
+    pop.innerHTML =
+      '<div class="style-pop-head">' + (currentLang === 'ar' ? 'ستايل الموقع' : 'SITE STYLE') + '</div>'
+      + '<div class="theme-grid">' + THEMES.map(function (t) {
+          return '<button type="button" class="theme-card" data-id="' + t.id + '" title="' + esc(L(t)) + '" aria-label="' + esc(L(t)) + '">'
+            + '<span class="theme-preview" style="background:' + t.bg + '">'
+            +   '<i style="background:' + t.accent + ';width:56%"></i>'
+            +   '<i style="background:' + t.text + ';opacity:.38;width:84%"></i>'
+            +   '<i style="background:' + t.text + ';opacity:.2;width:64%"></i>'
+            + '</span>'
+            + '<span class="theme-name">' + esc(L(t)) + '</span>'
+            + '</button>';
+        }).join('') + '</div>'
+      + '<div class="style-pop-sep"></div>'
+      + '<div class="style-pop-head" style="margin-bottom:8px">' + (currentLang === 'ar' ? 'لون التمييز' : 'ACCENT COLOUR') + '</div>'
+      + '<div class="swatch-row">' + PALETTES.map(function (p) {
+          return '<button class="swatch" type="button" data-id="' + p.id + '" style="--sw:' + p.accent + '" title="' + esc(L(p)) + '" aria-label="' + esc(L(p)) + '"></button>';
+        }).join('') + '</div>';
+    paintThemes();
   }
 
   function bindPalette() {
     var btn = $('#paletteBtn'), pop = $('#palettePop');
     if (!btn || !pop) return;
-    pop.innerHTML = PALETTES.map(function (p) {
-      return '<button class="swatch" type="button" data-id="' + p.id + '" style="--sw:' + p.accent + '" title="' + esc(L(p)) + '" aria-label="' + esc(L(p)) + '"></button>';
-    }).join('');
+    buildStylePop();
+
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       pop.classList.toggle('is-open');
       sfx.click();
     });
+
     pop.addEventListener('click', function (e) {
-      var s = e.target.closest('.swatch');
-      if (!s) return;
-      var p = PALETTES.find(function (x) { return x.id === s.dataset.id; });
-      if (p) { applyPalette(p); sfx.toggle(); }
-      pop.classList.remove('is-open');
+      var th = e.target.closest('.theme-card');
+      var sw = e.target.closest('.swatch');
+      if (th) {
+        setTheme(th.dataset.id);
+        try { localStorage.setItem('nabhan-theme', th.dataset.id); } catch (err) {}
+        clearAccent();
+        buildStylePop();
+        sfx.toggle();
+        pop.classList.remove('is-open');
+        return;
+      }
+      if (sw) {
+        var p = PALETTES.find(function (x) { return x.id === sw.dataset.id; });
+        if (p) { applyPalette(p); sfx.toggle(); }
+        pop.classList.remove('is-open');
+      }
     });
-    applyPalette(savedPalette());
+
+    /* ستايل محفوظ؟ حطه، وبعدين أي لون محفوظ بيتطبق فوقه */
+    setTheme(savedTheme().id);
+    if (savedPalette()) applyPalette(savedPalette());
+    paintThemes();
   }
 
   /* ------------------------- التشغيل ------------------------- */
