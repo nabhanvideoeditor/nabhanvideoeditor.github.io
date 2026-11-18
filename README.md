@@ -59,9 +59,9 @@ nabhan-portfolio/
 ## 5) الاستضافة المجانية (GitHub Pages)
 
 **الموقع شغال دلوقتي على:**
-👉 **https://vveston17.github.io/nabhan-portfolio/**
+👉 **https://nabhanvideoeditor.github.io/**
 
-المشروع: **Nabhan Portfolio** — المستودع: https://github.com/vveston17/nabhan-portfolio
+المشروع: **Nabhan Portfolio** — المستودع: https://github.com/nabhanvideoeditor/nabhanvideoeditor.github.io
 
 ### لو هترفع تحديث جديد
 ```bash
@@ -74,7 +74,7 @@ git push origin main
 
 ### عشان يظهر في جوجل
 1. افتح https://search.google.com/search-console
-2. أضف الـ Property بعنوان `https://vveston17.github.io`
+2. أضف الـ Property بعنوان `https://nabhanvideoeditor.github.io`
 3. اتحقق (HTML tag أو DNS).
 4. من **URL Inspection** اكتب الرابط واضغط **Request Indexing**.
 أو استنى عدة أيام — جوجل بيدور تلقائيًا.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vveston17.github.io/nabhan-portfolio/sitemap.xml
+Sitemap: https://nabhanvideoeditor.github.io/sitemap.xml
